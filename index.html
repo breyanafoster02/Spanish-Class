@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Godmommy's Spanish Class</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f172a;
+  --indigo: #1e293b;
+  --card: #1e293b;
+  --border: rgba(255,255,255,0.08);
+  --teal: #2dd4bf;
+  --yellow: #fbbf24;
+  --coral: #f87171;
+  --purple: #a78bfa;
+  --green: #34d399;
+  --white: #f8fafc;
+  --muted: rgba(248,250,252,0.5);
+  --radius: 16px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Nunito',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;overflow-x:hidden;}
+
+/* ── TOP BAR ── */
+#topbar{background:var(--indigo);border-bottom:1px solid var(--border);padding:0.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+#topbar-left{display:flex;align-items:center;gap:0.6rem;}
+#topbar-title{font-family:'Baloo 2',sans-serif;font-size:1.05rem;font-weight:800;color:var(--yellow);}
+#topbar-sub{font-size:0.72rem;color:var(--muted);font-weight:600;}
+#mode-toggle{display:flex;gap:0.35rem;}
+.mode-btn{padding:0.35rem 0.85rem;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:700;font-size:0.75rem;cursor:pointer;transition:all 0.2s;}
+.mode-btn.active{background:var(--teal);border-color:var(--teal);color:var(--navy);}
+
+/* ── MONTH STRIP ── */
+#month-strip{display:flex;overflow-x:auto;gap:0.4rem;padding:0.75rem 1.25rem;background:var(--navy);border-bottom:1px solid var(--border);scrollbar-width:none;}
+#month-strip::-webkit-scrollbar{display:none;}
+.m-tab{flex-shrink:0;padding:0.4rem 1rem;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.m-tab:hover{border-color:var(--teal);color:var(--teal);}
+.m-tab.active{background:var(--teal);border-color:var(--teal);color:var(--navy);}
+
+/* ── WEEK NAV ── */
+#week-nav{display:flex;gap:0.4rem;padding:0.75rem 1.25rem;border-bottom:1px solid var(--border);}
+.w-btn{padding:0.35rem 0.9rem;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;transition:all 0.2s;}
+.w-btn:hover{border-color:var(--yellow);color:var(--yellow);}
+.w-btn.active{background:var(--yellow);border-color:var(--yellow);color:var(--navy);}
+
+/* ── DAY TABS ── */
+#day-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);}
+.d-tab{flex:1;padding:0.65rem;text-align:center;border:none;background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:0.8rem;cursor:pointer;transition:all 0.2s;border-bottom:3px solid transparent;}
+.d-tab:hover{color:var(--white);}
+.d-tab.active{color:var(--white);border-bottom-color:var(--coral);}
+.d-tab.mon.active{border-bottom-color:var(--teal);}
+.d-tab.wed.active{border-bottom-color:var(--purple);}
+.d-tab.ind.active{border-bottom-color:var(--green);}
+
+/* ── MAIN ── */
+main{max-width:680px;margin:0 auto;padding:1.25rem;}
+
+/* ── SESSION BLOCK ── */
+.session-block{margin-bottom:1.25rem;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);}
+.sb-header{padding:0.85rem 1.1rem;display:flex;align-items:center;gap:0.6rem;cursor:pointer;user-select:none;border-bottom:1px solid transparent;}
+.sb-header:hover{filter:brightness(1.08);}
+.sb-time{font-size:0.7rem;font-weight:800;padding:0.2rem 0.55rem;border-radius:10px;opacity:0.9;white-space:nowrap;}
+.sb-title{font-family:'Baloo 2',sans-serif;font-size:1rem;font-weight:700;flex:1;}
+.sb-arrow{font-size:0.9rem;color:var(--muted);transition:transform 0.3s;}
+.sb-arrow.open{transform:rotate(180deg);}
+.sb-body{padding:1.1rem;display:none;}
+.sb-body.open{display:block;}
+
+.block-warmup .sb-header{background:linear-gradient(135deg,#1e3a5f,#1e293b);}
+.block-warmup .sb-time{background:#3b82f6;color:white;}
+.block-content .sb-header{background:linear-gradient(135deg,#1a3a2e,#1e293b);}
+.block-content .sb-time{background:var(--teal);color:var(--navy);}
+.block-practice .sb-header{background:linear-gradient(135deg,#3a1a3a,#1e293b);}
+.block-practice .sb-time{background:var(--purple);color:white;}
+.block-wrapup .sb-header{background:linear-gradient(135deg,#3a2a1a,#1e293b);}
+.block-wrapup .sb-time{background:var(--yellow);color:var(--navy);}
+
+/* ── VOCAB TABLE ── */
+.vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;}
+.vocab-card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:0.6rem 0.75rem;}
+.vc-es{font-weight:800;font-size:0.88rem;color:var(--white);}
+.vc-pron{font-size:0.7rem;color:var(--muted);font-style:italic;margin:1px 0;}
+.vc-en{font-size:0.78rem;color:var(--teal);font-weight:600;}
+@media(max-width:480px){.vocab-grid{grid-template-columns:1fr;}}
+
+/* ── GRAMMAR BOX ── */
+.grammar-pill{background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.3);border-radius:12px;padding:0.9rem;margin-bottom:0.7rem;}
+.grammar-pill h4{font-size:0.82rem;font-weight:800;color:var(--purple);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.5px;}
+.ex-sentence{background:rgba(255,255,255,0.04);border-radius:8px;padding:0.5rem 0.7rem;margin:0.3rem 0;font-size:0.85rem;}
+.ex-es{font-weight:700;color:var(--white);}
+.ex-en{font-size:0.78rem;color:var(--muted);font-style:italic;}
+.grammar-tip{background:rgba(251,191,36,0.08);border-left:3px solid var(--yellow);border-radius:0 8px 8px 0;padding:0.6rem 0.8rem;margin-top:0.6rem;font-size:0.82rem;color:rgba(255,255,255,0.8);line-height:1.5;}
+
+/* ── ACTIVITY CARDS ── */
+.activity-list{display:flex;flex-direction:column;gap:0.5rem;}
+.act-card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:0.75rem 0.9rem;}
+.act-header{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;}
+.act-emoji{font-size:1.1rem;}
+.act-title{font-weight:800;font-size:0.85rem;}
+.act-desc{font-size:0.8rem;color:rgba(255,255,255,0.65);line-height:1.5;}
+
+/* ── TUTOR NOTES ── */
+.tutor-notes{background:rgba(45,212,191,0.06);border:1px solid rgba(45,212,191,0.2);border-radius:10px;padding:0.8rem;margin-top:0.8rem;}
+.tutor-notes h5{font-size:0.75rem;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.5rem;}
+.tutor-notes li{font-size:0.8rem;color:rgba(255,255,255,0.7);margin-left:1rem;margin-bottom:0.25rem;line-height:1.4;}
+
+/* ── CHALLENGE ── */
+.challenge-box{background:linear-gradient(135deg,rgba(251,191,36,0.1),rgba(248,113,113,0.1));border:1px solid rgba(251,191,36,0.3);border-radius:12px;padding:1rem;}
+.challenge-box h4{font-family:'Baloo 2',sans-serif;font-size:1rem;font-weight:700;color:var(--yellow);margin-bottom:0.5rem;}
+.challenge-box p{font-size:0.85rem;color:rgba(255,255,255,0.75);line-height:1.5;}
+.challenge-prompt{background:rgba(255,255,255,0.05);border-radius:8px;padding:0.6rem;margin-top:0.5rem;font-size:0.9rem;font-weight:700;font-style:italic;color:var(--white);}
+
+/* ── INDEPENDENT DAY ── */
+.ind-section{margin-bottom:1.25rem;}
+.ind-section-title{font-family:'Baloo 2',sans-serif;font-size:0.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem;}
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);}
+.video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
+.timer-badge{display:inline-flex;align-items:center;gap:0.3rem;background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.3);border-radius:20px;padding:0.2rem 0.6rem;font-size:0.72rem;font-weight:700;color:var(--green);margin-bottom:0.5rem;}
+
+/* ── WORKBOOK ── */
+.workbook-card{background:var(--indigo);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem;}
+.wb-instruction{font-size:0.8rem;color:var(--muted);margin-bottom:0.8rem;font-style:italic;}
+.wb-item{margin-bottom:0.9rem;}
+.wb-label{font-size:0.82rem;font-weight:700;color:var(--white);margin-bottom:0.25rem;}
+.wb-label span{color:var(--muted);font-weight:400;}
+.wb-input{width:100%;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);border-radius:8px;padding:0.5rem 0.7rem;color:var(--white);font-family:'Nunito',sans-serif;font-size:0.85rem;transition:border-color 0.2s;outline:none;}
+.wb-input:focus{border-color:var(--teal);}
+.wb-word-bank{display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:0.6rem;}
+.wb-chip{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);border-radius:20px;padding:0.2rem 0.65rem;font-size:0.75rem;font-weight:700;color:var(--yellow);cursor:pointer;transition:all 0.2s;}
+.wb-chip:hover{background:rgba(251,191,36,0.2);}
+.wb-chip.used{opacity:0.35;text-decoration:line-through;cursor:default;}
+.wb-actions{display:flex;gap:0.5rem;margin-top:1rem;flex-wrap:wrap;}
+.wb-btn{padding:0.45rem 1.1rem;border-radius:20px;border:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.8rem;cursor:pointer;transition:all 0.2s;}
+.wb-btn.check{background:var(--green);color:var(--navy);}
+.wb-btn.clear{background:rgba(255,255,255,0.08);color:var(--white);}
+.wb-btn.print{background:rgba(248,113,113,0.15);border:1px solid rgba(248,113,113,0.3);color:var(--coral);}
+.wb-btn:hover{opacity:0.85;transform:translateY(-1px);}
+.wb-result{margin-top:0.7rem;padding:0.6rem 0.8rem;border-radius:8px;font-size:0.82rem;font-weight:700;display:none;}
+.wb-result.show{display:block;}
+.wb-result.good{background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.3);color:var(--green);}
+.wb-result.bad{background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);color:var(--coral);}
+
+/* ── GAMES ── */
+.game-launcher{display:flex;gap:0.5rem;flex-wrap:wrap;}
+.gl-btn{flex:1;min-width:90px;padding:0.7rem 0.5rem;border-radius:12px;border:1.5px solid var(--border);background:rgba(255,255,255,0.03);color:var(--white);font-family:'Nunito',sans-serif;font-weight:800;font-size:0.8rem;cursor:pointer;text-align:center;transition:all 0.2s;}
+.gl-btn:hover{transform:translateY(-2px);}
+.gl-btn .gl-emoji{font-size:1.4rem;display:block;margin-bottom:0.2rem;}
+.gl-btn.fc{border-color:rgba(45,212,191,0.4);}
+.gl-btn.fc:hover{background:rgba(45,212,191,0.1);}
+.gl-btn.qz{border-color:rgba(167,139,250,0.4);}
+.gl-btn.qz:hover{background:rgba(167,139,250,0.1);}
+.gl-btn.mt{border-color:rgba(251,191,36,0.4);}
+.gl-btn.mt:hover{background:rgba(251,191,36,0.1);}
+
+/* ── GAME MODAL ── */
+#gmodal{display:none;position:fixed;inset:0;z-index:900;}
+#gm-back{position:absolute;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);}
+#gm-box{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(96vw,520px);max-height:88vh;overflow-y:auto;
+  background:#1e293b;border:1.5px solid var(--teal);border-radius:20px;padding:1.4rem;}
+#gm-close-btn{position:absolute;top:0.9rem;right:0.9rem;background:rgba(255,255,255,0.08);
+  border:none;color:var(--white);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:1rem;line-height:30px;text-align:center;}
+.gm-h{font-family:'Baloo 2',sans-serif;font-size:1.3rem;font-weight:800;color:var(--yellow);margin-bottom:0.2rem;}
+.gm-sh{font-size:0.78rem;color:var(--teal);font-weight:600;margin-bottom:1.1rem;}
+
+/* flashcard */
+#fc-wrap{perspective:900px;width:100%;height:180px;cursor:pointer;margin:0.8rem 0;}
+#fc-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.45s;}
+#fc-inner.flip{transform:rotateY(180deg);}
+.fc-side{position:absolute;inset:0;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden;padding:1.2rem;text-align:center;}
+.fc-front{background:linear-gradient(135deg,#0f2744,#1e293b);border:1.5px solid var(--teal);}
+.fc-back{background:linear-gradient(135deg,#0a3328,#1e293b);transform:rotateY(180deg);border:1.5px solid var(--green);}
+.fc-lbl{font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;opacity:0.5;margin-bottom:0.4rem;}
+.fc-word{font-family:'Baloo 2',sans-serif;font-size:1.5rem;font-weight:800;}
+.fc-sub{font-size:0.75rem;opacity:0.5;margin-top:0.25rem;}
+.fc-hint{text-align:center;font-size:0.72rem;color:var(--muted);margin-bottom:0.3rem;}
+.fc-prog{height:5px;background:rgba(255,255,255,0.08);border-radius:3px;margin-bottom:0.6rem;}
+.fc-prog-fill{height:100%;background:var(--teal);border-radius:3px;transition:width 0.3s;}
+.fc-ctrl{display:flex;justify-content:space-between;align-items:center;gap:0.4rem;}
+.fc-nav{padding:0.4rem 1rem;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--white);font-family:'Nunito',sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer;}
+.fc-nav:hover{border-color:var(--teal);}
+.fc-count{font-size:0.8rem;color:var(--teal);font-weight:800;}
+
+/* quiz */
+.quiz-q{background:rgba(255,255,255,0.04);border:1.5px solid var(--border);border-radius:12px;padding:1rem;text-align:center;font-family:'Baloo 2',sans-serif;font-size:1.3rem;font-weight:700;margin:0.6rem 0;}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:0.45rem;margin-bottom:0.6rem;}
+.quiz-o{padding:0.6rem 0.75rem;border-radius:10px;border:1.5px solid var(--border);background:rgba(255,255,255,0.04);color:var(--white);font-family:'Nunito',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;text-align:left;transition:all 0.2s;}
+.quiz-o:hover:not(.done){border-color:var(--yellow);background:rgba(251,191,36,0.08);}
+.quiz-o.correct{background:rgba(52,211,153,0.15);border-color:var(--green);color:var(--green);}
+.quiz-o.wrong{background:rgba(248,113,113,0.15);border-color:var(--coral);color:var(--coral);}
+.quiz-o.done{cursor:default;}
+.quiz-fb{min-height:24px;text-align:center;font-weight:800;font-size:0.88rem;margin-bottom:0.4rem;}
+.quiz-bar{display:flex;justify-content:space-between;font-size:0.78rem;color:var(--teal);font-weight:700;background:rgba(255,255,255,0.04);border-radius:8px;padding:0.4rem 0.7rem;}
+.quiz-next{display:none;margin:0.6rem auto 0;padding:0.5rem 1.8rem;border-radius:20px;background:var(--yellow);border:none;color:var(--navy);font-family:'Nunito',sans-serif;font-weight:800;font-size:0.85rem;cursor:pointer;}
+
+/* match */
+.match-info{display:flex;justify-content:space-between;font-size:0.8rem;color:var(--teal);font-weight:700;margin-bottom:0.6rem;}
+#match-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.4rem;}
+@media(max-width:400px){#match-grid{grid-template-columns:repeat(3,1fr);}}
+.mt-tile{padding:0.45rem 0.2rem;min-height:50px;border-radius:9px;border:1.5px solid var(--border);background:rgba(255,255,255,0.04);color:var(--white);font-family:'Nunito',sans-serif;font-weight:700;font-size:0.72rem;cursor:pointer;text-align:center;display:flex;align-items:center;justify-content:center;transition:all 0.2s;line-height:1.2;}
+.mt-tile:hover:not(.mt-solved):not(.mt-sel){border-color:var(--yellow);background:rgba(251,191,36,0.08);}
+.mt-tile.mt-sel{border-color:var(--teal);background:rgba(45,212,191,0.12);}
+.mt-tile.mt-solved{background:rgba(52,211,153,0.12);border-color:var(--green);color:var(--green);cursor:default;opacity:0.7;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.mt-tile.mt-shake{animation:shake 0.35s;}
+
+/* complete screen */
+.gm-done{text-align:center;padding:1.5rem 0.5rem;}
+.gm-done .trophy{font-size:3rem;margin-bottom:0.5rem;}
+.gm-done h3{font-family:'Baloo 2',sans-serif;font-size:1.4rem;color:var(--yellow);margin-bottom:0.3rem;}
+.gm-done p{font-size:0.85rem;color:var(--muted);margin-bottom:1rem;}
+.gm-done-btns{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;}
+.gm-again{padding:0.5rem 1.4rem;border-radius:20px;background:var(--teal);border:none;color:var(--navy);font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;}
+.gm-other{padding:0.5rem 1.4rem;border-radius:20px;background:rgba(255,255,255,0.08);border:none;color:var(--white);font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;}
+
+/* ── MONTH HEADER ── */
+.month-hero{border-radius:var(--radius);padding:1.25rem;margin-bottom:1.25rem;position:relative;overflow:hidden;}
+.mh-bg{position:absolute;inset:0;opacity:0.08;font-size:8rem;display:flex;align-items:center;justify-content:flex-end;padding-right:1rem;pointer-events:none;}
+.mh-label{font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;opacity:0.7;margin-bottom:0.2rem;}
+.mh-title{font-family:'Baloo 2',sans-serif;font-size:1.6rem;font-weight:800;line-height:1.1;}
+.mh-sub{font-size:0.82rem;opacity:0.75;margin-top:0.25rem;}
+.mh-tags{display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.6rem;}
+.mh-tag{padding:0.2rem 0.6rem;border-radius:20px;font-size:0.7rem;font-weight:700;background:rgba(255,255,255,0.15);}
+.mh-may{background:linear-gradient(135deg,#064e3b,#065f46);}
+.mh-jun{background:linear-gradient(135deg,#78350f,#92400e);}
+.mh-jul{background:linear-gradient(135deg,#7f1d1d,#991b1b);}
+.mh-aug{background:linear-gradient(135deg,#1e3a8a,#1d4ed8);}
+.mh-sep{background:linear-gradient(135deg,#4c1d95,#6d28d9);}
+.mh-oct{background:linear-gradient(135deg,#7c2d12,#c2410c);}
+.mh-nov{background:linear-gradient(135deg,#374151,#4b5563);}
+.mh-dec{background:linear-gradient(135deg,#0f172a,#1e3a8a);}
+
+/* ── PRINT ── */
+@media print {
+  #topbar,#month-strip,#week-nav,#day-tabs,.game-launcher,.wb-actions,.gl-btn,#gmodal{display:none!important;}
+  body{background:white;color:black;}
+  .wb-input{border:1px solid #ccc;background:white;color:black;}
+  .workbook-card{background:white;border:1px solid #ddd;}
+  .wb-chip{background:#f0f0f0;color:#333;border-color:#ccc;}
+  main{max-width:100%;padding:0;}
+  .sb-body{display:block!important;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div id="topbar-left">
+    <span style="font-size:1.3rem;">🇪🇸</span>
+    <div>
+      <div id="topbar-title">Godmommy's Spanish Class</div>
+      <div id="topbar-sub">May – December • Year 1</div>
+    </div>
+  </div>
+  <div id="mode-toggle">
+    <button class="mode-btn active" onclick="setMode('tutor')" id="btn-tutor">👩🏾‍🏫 Tutor</button>
+    <button class="mode-btn" onclick="setMode('student')" id="btn-student">🎒 Solo</button>
+  </div>
+</div>
+
+<!-- MONTH STRIP -->
+<div id="month-strip">
+  <button class="m-tab active" onclick="setMonth('may')">🌸 May</button>
+  <button class="m-tab" onclick="setMonth('jun')">☀️ June</button>
+  <button class="m-tab" onclick="setMonth('jul')">🎆 July</button>
+  <button class="m-tab" onclick="setMonth('aug')">📚 August</button>
+  <button class="m-tab" onclick="setMonth('sep')">🍎 September</button>
+  <button class="m-tab" onclick="setMonth('oct')">🎃 October</button>
+  <button class="m-tab" onclick="setMonth('nov')">🦃 November</button>
+  <button class="m-tab" onclick="setMonth('dec')">🎄 December</button>
+</div>
+
+<!-- WEEK NAV -->
+<div id="week-nav">
+  <button class="w-btn active" onclick="setWeek(1)">Week 1</button>
+  <button class="w-btn" onclick="setWeek(2)">Week 2</button>
+  <button class="w-btn" onclick="setWeek(3)">Week 3</button>
+  <button class="w-btn" onclick="setWeek(4)">Week 4</button>
+</div>
+
+<!-- DAY TABS -->
+<div id="day-tabs">
+  <button class="d-tab mon active" onclick="setDay('mon')" id="tab-mon">📘 Monday</button>
+  <button class="d-tab wed" onclick="setDay('wed')" id="tab-wed">📗 Wednesday</button>
+  <button class="d-tab ind" onclick="setDay('ind')" id="tab-ind">🌟 Solo Day</button>
+</div>
+
+<main id="main-content"></main>
+
+<!-- GAME MODAL -->
+<div id="gmodal">
+  <div id="gm-back" onclick="closeGame()"></div>
+  <div id="gm-box">
+    <button id="gm-close-btn" onclick="closeGame()">✕</button>
+    <div id="gm-content"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// CURRICULUM DATA
+// ═══════════════════════════════════════════════
+const DATA = {
+  may: {
+    label:"Mayo / May", emoji:"🌸", theme:"Places & Prepositions",
+    color:"mh-may", tags:["📍 Places","🗺️ Prepositions","🏙️ City Life"],
+    weeks: [
+      { // Week 1
+        mon: {
+          vocab: [
+            {es:"el lugar",pr:"el loo-GAHR",en:"the place"},
+            {es:"la casa",pr:"lah KAH-sah",en:"house / home"},
+            {es:"la escuela",pr:"lah ehs-KWEH-lah",en:"school"},
+            {es:"la biblioteca",pr:"lah bee-blee-oh-TEH-kah",en:"library"},
+            {es:"el parque",pr:"el PAR-keh",en:"park"},
+            {es:"el supermercado",pr:"el soo-pehr-mehr-KAH-doh",en:"supermarket"},
+            {es:"el hospital",pr:"el ohs-pee-TAHL",en:"hospital"},
+            {es:"la iglesia",pr:"lah ee-GLEH-syah",en:"church"},
+            {es:"el restaurante",pr:"el rehs-tah-oo-RAHN-teh",en:"restaurant"},
+            {es:"la tienda",pr:"lah TYEN-dah",en:"store / shop"},
+          ],
+          grammar: {
+            title:"Voy a + place (I'm going to...)",
+            rule:"Use <b>voy a</b> to say where you're going. Before masculine nouns, a + el becomes <b>al</b>.",
+            examples:[
+              {es:"Voy a la escuela.",en:"I'm going to school."},
+              {es:"Voy al parque.",en:"I'm going to the park."},
+              {es:"¿Adónde vas?",en:"Where are you going?"},
+            ],
+            tip:"⚡ a + el = al → 'Voy al parque' NOT 'Voy a el parque'"
+          },
+          activities:[
+            {emoji:"📍",title:"Point & Name",desc:"Open Google Maps. Point to places in your city and take turns naming them in Spanish."},
+            {emoji:"🗣️",title:"I'm Going To...",desc:"Take turns saying 'Voy a la/al ___' and acting out what you'd do there. Other person guesses the place."},
+            {emoji:"✍️",title:"Sentence Builder",desc:"Write 5 sentences starting with 'Voy a...' — one for each day of the school week."},
+          ],
+          challenge:{title:"🗺️ My Neighborhood",desc:"Draw a simple neighborhood map with at least 6 buildings. Label everything in Spanish. Be ready to say where each place is!",prompt:'"Aquí está mi vecindario. Hay una escuela, un parque..."'},
+          notes:["He already knows 'ir a la escuela' from Feb — connect it to 'voy a' immediately","Open every session asking '¿Qué tiempo hace hoy?' as a warm-up","Use his actual neighborhood for the map activity — it makes it real"]
+        },
+        wed: {
+          review:["el parque","la escuela","la tienda","la iglesia","el hospital"],
+          vocab: [
+            {es:"cerca de",pr:"SEHR-kah deh",en:"near / close to"},
+            {es:"lejos de",pr:"LEH-hohs deh",en:"far from"},
+            {es:"al lado de",pr:"ahl LAH-doh deh",en:"next to"},
+            {es:"enfrente de",pr:"ehn-FREN-teh deh",en:"in front of"},
+            {es:"detrás de",pr:"deh-TRAHS deh",en:"behind"},
+          ],
+          grammar:{
+            title:"Preposition Sentences",
+            rule:"Combine a place + a preposition to describe where things are.",
+            examples:[
+              {es:"La biblioteca está cerca de la escuela.",en:"The library is near the school."},
+              {es:"El parque está al lado de la tienda.",en:"The park is next to the store."},
+              {es:"¿Dónde está el hospital?",en:"Where is the hospital?"},
+            ],
+            tip:"🎯 Practice: point to things in the room — '¿Dónde está el libro?' '¡Está al lado de la mochila!'"
+          },
+          activities:[
+            {emoji:"❓",title:"¿Dónde está? Game",desc:"Place small objects on a table. Ask '¿Dónde está el ___?' and answer using this week's prepositions."},
+            {emoji:"📝",title:"Map Description",desc:"Use Monday's neighborhood map. Describe where 5 things are using 'cerca de,' 'al lado de,' etc."},
+          ],
+          challenge:{title:"🏆 Week 1 Wrap-Up",desc:"5-sentence speaking challenge: describe your neighborhood using places AND prepositions together.",prompt:'"La iglesia está cerca de mi casa. El parque está al lado de..."'},
+          notes:["Quick vocab check on Mon's 10 words before introducing new ones","The ¿Dónde está? game works great with his pencil case or backpack items","End with the speaking challenge — even if imperfect, celebrate the attempt"]
+        },
+        ind: {
+          video:{id:"aBPmAUYZpnk", title:"Spanish Places Vocabulary for Kids", channel:"Rockalingua"},
+          workbook:{
+            title:"Week 1 — Places in My Town",
+            instruction:"Fill in each blank with the correct Spanish word from the word bank.",
+            items:[
+              {label:'1. I go to school every day. → Yo ___ a la escuela.',answer:"voy",blank:true},
+              {label:'2. The park is next to the store. → El parque está ___ de la tienda.',answer:"al lado",blank:true},
+              {label:'3. The library is near the school. → La biblioteca está ___ de la escuela.',answer:"cerca",blank:true},
+              {label:'4. Write the Spanish word for "hospital":',answer:"el hospital",blank:true},
+              {label:'5. Write the Spanish word for "supermarket":',answer:"el supermercado",blank:true},
+            ],
+            bank:["voy","al lado","cerca","el hospital","el supermercado","lejos","la tienda"]
+          }
+        }
+      },
+      { // Week 2
+        mon: {
+          vocab: [
+            {es:"la ciudad",pr:"lah syoo-DAHD",en:"city"},
+            {es:"el banco",pr:"el BAHN-koh",en:"bank"},
+            {es:"la farmacia",pr:"lah far-MAH-syah",en:"pharmacy"},
+            {es:"el correo",pr:"el koh-RREH-oh",en:"post office"},
+            {es:"el aeropuerto",pr:"el ah-eh-roh-PWEHR-toh",en:"airport"},
+            {es:"la estación",pr:"lah ehs-tah-SYOHN",en:"station"},
+            {es:"el museo",pr:"el moo-SEH-oh",en:"museum"},
+            {es:"el zoológico",pr:"el soh-oh-LOH-hee-koh",en:"zoo"},
+            {es:"la piscina",pr:"lah pee-SEE-nah",en:"swimming pool"},
+            {es:"el estadio",pr:"el ehs-TAH-dyoh",en:"stadium"},
+          ],
+          grammar:{
+            title:"¿Dónde está...? / Está en... (Where is / It's at...)",
+            rule:"Use <b>¿Dónde está?</b> to ask where something is. Answer with <b>Está en + place</b>.",
+            examples:[
+              {es:"¿Dónde está el banco?",en:"Where is the bank?"},
+              {es:"Está en la ciudad.",en:"It's in the city."},
+              {es:"El museo está enfrente del parque.",en:"The museum is in front of the park."},
+            ],
+            tip:"🌍 Virtual field trip: pull up Google Street View of a Spanish city and describe what you see!"
+          },
+          activities:[
+            {emoji:"🌍",title:"Virtual Field Trip",desc:"Open Google Maps Street View for Mexico City's Zócalo. Name every building or place type you recognize in Spanish."},
+            {emoji:"🎲",title:"20 Questions — Places",desc:"Think of a place from this week OR last week. Other person asks yes/no questions: '¿Está en la ciudad?' '¿Tiene comida?'"},
+            {emoji:"✍️",title:"City Builder",desc:"Design your dream city. Draw it, label at least 8 places in Spanish, then describe where 3 things are."},
+          ],
+          challenge:{title:"🏙️ City Tour Guide",desc:"Pretend you're a tour guide showing someone around your dream city. Introduce 5 places using 'Aquí está...' or 'Allí está...'",prompt:'"Bienvenidos a mi ciudad. Aquí está el zoológico. Está al lado del estadio..."'},
+          notes:["Review Week 1 prepositions with a quick 2-minute quiz before starting","The virtual field trip is highly engaging — let him explore for 3-4 minutes freely first","'El zoológico' always gets a reaction from kids — lean into the fun words"]
+        },
+        wed: {
+          review:["la ciudad","el museo","el zoológico","la farmacia","el aeropuerto"],
+          vocab:[
+            {es:"¿Cómo se llega a...?",pr:"KOH-moh seh YEH-gah",en:"How do you get to...?"},
+            {es:"dobla a la derecha",pr:"DOH-blah ah lah deh-REH-chah",en:"turn right"},
+            {es:"dobla a la izquierda",pr:"DOH-blah ah lah ees-KYEHR-dah",en:"turn left"},
+            {es:"sigue derecho",pr:"SEE-geh deh-REH-choh",en:"go straight"},
+            {es:"está cerca",pr:"ehs-TAH SEHR-kah",en:"it's nearby"},
+          ],
+          grammar:{
+            title:"Giving Simple Directions",
+            rule:"Combine direction words to guide someone to a place.",
+            examples:[
+              {es:"Dobla a la derecha en la escuela.",en:"Turn right at the school."},
+              {es:"Sigue derecho dos cuadras.",en:"Go straight two blocks."},
+              {es:"El banco está a la izquierda.",en:"The bank is on the left."},
+            ],
+            tip:"🧭 Use your hands! Point right for 'derecha,' left for 'izquierda' every single time."
+          },
+          activities:[
+            {emoji:"🧭",title:"Directions Game",desc:"Use the Week 1 neighborhood map. Give directions from one place to another using this week's direction words."},
+            {emoji:"🎭",title:"Skit: Asking for Directions",desc:"Roleplay asking and giving directions to 3 different places. Switch roles each time."},
+          ],
+          challenge:{title:"🏆 Week 2 Wrap-Up",desc:"Write directions from your house to your school using at least 4 direction phrases.",prompt:'"Desde mi casa, sigue derecho, dobla a la izquierda en el parque..."'},
+          notes:["Use hands/body for left and right — kinesthetic memory is strong","Directions are hard! Keep it to 2-3 step sequences max this week","Celebrate any attempt at the roleplay — real-world usage is the goal"]
+        },
+        ind: {
+          video:{id:"V3NMpnCmgpI", title:"Giving Directions in Spanish", channel:"Butterfly Spanish"},
+          workbook:{
+            title:"Week 2 — Getting Around Town",
+            instruction:"Read each clue and write the correct Spanish word or phrase.",
+            items:[
+              {label:"1. The place where planes land: el ___",answer:"aeropuerto",blank:true},
+              {label:"2. You go here to see art: el ___",answer:"museo",blank:true},
+              {label:"3. 'Turn right' in Spanish:",answer:"dobla a la derecha",blank:true},
+              {label:"4. 'Go straight' in Spanish:",answer:"sigue derecho",blank:true},
+              {label:"5. You need medicine, so you go to la ___:",answer:"farmacia",blank:true},
+            ],
+            bank:["aeropuerto","museo","dobla a la derecha","sigue derecho","farmacia","estadio","izquierda"]
+          }
+        }
+      },
+      { // Week 3
+        mon: {
+          vocab:[
+            {es:"ir de compras",pr:"eer deh KOHM-prahs",en:"to go shopping"},
+            {es:"¿Cuánto cuesta?",pr:"KWAHN-toh KWEHS-tah",en:"How much does it cost?"},
+            {es:"cuesta...",pr:"KWEHS-tah",en:"it costs..."},
+            {es:"barato/a",pr:"bah-RAH-toh",en:"cheap / inexpensive"},
+            {es:"caro/a",pr:"KAH-roh",en:"expensive"},
+            {es:"quiero comprar",pr:"KYEH-roh kohm-PRAHR",en:"I want to buy"},
+            {es:"la ropa",pr:"lah ROH-pah",en:"clothing"},
+            {es:"la comida",pr:"lah koh-MEE-dah",en:"food (review)"},
+            {es:"el precio",pr:"el PREH-syoh",en:"the price"},
+            {es:"¿Tiene...?",pr:"TYEH-neh",en:"Do you have...?"},
+          ],
+          grammar:{
+            title:"Shopping Conversations",
+            rule:"Use <b>¿Cuánto cuesta?</b> to ask price and <b>quiero comprar</b> to say what you want.",
+            examples:[
+              {es:"¿Cuánto cuesta la camisa?",en:"How much does the shirt cost?"},
+              {es:"Cuesta diez dólares.",en:"It costs ten dollars."},
+              {es:"Quiero comprar una mochila.",en:"I want to buy a backpack."},
+            ],
+            tip:"💡 Connect to April's clothing vocab — la camisa, los zapatos, la chaqueta — he knows these!"
+          },
+          activities:[
+            {emoji:"🛒",title:"Grocery Store Roleplay",desc:"One person is the shopkeeper, one is the customer. Use food and clothing vocab from previous months. Practice '¿Cuánto cuesta?' and 'Quiero comprar...'"},
+            {emoji:"💰",title:"Price Tag Game",desc:"Write prices on sticky notes in Spanish. Attach to objects around the room. Ask '¿Cuánto cuesta el/la ___?' and answer."},
+            {emoji:"📝",title:"Shopping List",desc:"Write a shopping list of 8 things in Spanish with the type of store you'd find each item."},
+          ],
+          challenge:{title:"🛍️ Shopping Skit",desc:"2-minute shopping roleplay: visit two stores and buy at least 3 items. Use prices, 'quiero comprar,' and greetings.",prompt:'"Buenos días. ¿Tiene camisas? Sí. ¿Cuánto cuesta? Cuesta..."'},
+          notes:["Connects beautifully to April's clothing unit — this is a great review opportunity","Keep the price practice fun — use fake money if you have it","He should know most food vocab from February — shopping is the new layer"]
+        },
+        wed: {
+          review:["¿Cuánto cuesta?","quiero comprar","barato/a","caro/a","el precio"],
+          vocab:[
+            {es:"el mercado",pr:"el mehr-KAH-doh",en:"market / marketplace"},
+            {es:"el centro comercial",pr:"el SEHN-troh koh-mehr-SYAHL",en:"shopping mall"},
+            {es:"la caja",pr:"lah KAH-hah",en:"checkout / cashier"},
+            {es:"el recibo",pr:"el reh-SEE-boh",en:"receipt"},
+            {es:"¡Qué ganga!",pr:"keh GAHN-gah",en:"What a deal! / Bargain!"},
+          ],
+          grammar:{
+            title:"Shopping Dialogue Full Run-Through",
+            rule:"Put the whole shopping conversation together from greeting to purchase.",
+            examples:[
+              {es:"Buenos días. ¿En qué le puedo ayudar?",en:"Good morning. How can I help you?"},
+              {es:"Busco una chaqueta barata.",en:"I'm looking for a cheap jacket."},
+              {es:"Pase a la caja, por favor.",en:"Please go to the checkout."},
+            ],
+            tip:"🎭 Run the full 6-line shopping dialogue twice — switch roles so he practices both sides."
+          },
+          activities:[
+            {emoji:"🎭",title:"Full Market Skit",desc:"Set up a 'mercado' with 5 items from around the house. Full shopping conversation from greeting to receipt."},
+            {emoji:"✏️",title:"Design an Ad",desc:"Create a bilingual ad (Spanish + English) for an imaginary sale at a tienda. Include item names and prices."},
+          ],
+          challenge:{title:"🏆 Week 3 Wrap-Up",desc:"Write a 6-line shopping dialogue from scratch — greeting, asking for something, asking the price, saying it's expensive or cheap, buying it, saying goodbye.",prompt:"Use all this week's AND last week's shopping vocabulary!"},
+          notes:["'¡Qué ganga!' is one of those fun phrases he'll actually use — make sure it sticks","The full market skit is the highlight — take a quick video if he's up for it!","Week 3 is mid-month review moment — slip in 5 random vocab words from May Weeks 1-2"]
+        },
+        ind: {
+          video:{id:"0-IKnHrEMSE", title:"Shopping in Spanish for Kids", channel:"123 Andrés"},
+          workbook:{
+            title:"Week 3 — ¡Vamos de compras!",
+            instruction:"Complete the shopping conversation by filling in the blanks.",
+            items:[
+              {label:"Customer: Buenos días. ¿___ una mochila azul?",answer:"Tiene",blank:true},
+              {label:"Shopkeeper: Sí. ___ veinte dólares.",answer:"Cuesta",blank:true},
+              {label:"Customer: ¡Qué ___! Es muy caro.",answer:"caro",blank:true},
+              {label:"Shopkeeper: Tenemos una ___ por diez dólares.",answer:"barata",blank:true},
+              {label:"Customer: Perfecto. Quiero ___ la mochila.",answer:"comprar",blank:true},
+            ],
+            bank:["Tiene","Cuesta","caro","barata","comprar","mercado","recibo"]
+          }
+        }
+      },
+      { // Week 4
+        mon: {
+          vocab:[
+            {es:"mi ciudad favorita",pr:"mee syoo-DAHD fah-boh-REE-tah",en:"my favorite city"},
+            {es:"la capital",pr:"lah kah-pee-TAHL",en:"the capital"},
+            {es:"el país",pr:"el pah-EES",en:"the country"},
+            {es:"hablan español",pr:"AH-blahn ehs-pahn-YOHL",en:"they speak Spanish"},
+            {es:"me gustaría visitar",pr:"meh goos-tah-REE-ah bee-see-TAHR",en:"I would like to visit"},
+            {es:"es famoso/a por",pr:"ehs fah-MOH-soh por",en:"it is famous for"},
+            {es:"la cultura",pr:"lah kool-TOO-rah",en:"culture"},
+            {es:"la comida típica",pr:"lah koh-MEE-dah TEE-pee-kah",en:"traditional food"},
+            {es:"el monumento",pr:"el moh-noo-MEHN-toh",en:"monument"},
+            {es:"bonito/a",pr:"boh-NEE-toh",en:"beautiful / pretty"},
+          ],
+          grammar:{
+            title:"Talking About Countries & Capitals",
+            rule:"Use <b>es famoso/a por</b> and <b>me gustaría visitar</b> to talk about places you want to see.",
+            examples:[
+              {es:"México es famoso por su comida.",en:"Mexico is famous for its food."},
+              {es:"Me gustaría visitar España.",en:"I would like to visit Spain."},
+              {es:"En Colombia, hablan español.",en:"In Colombia, they speak Spanish."},
+            ],
+            tip:"🌎 Point out Spanish-speaking countries on a map — there are 20! How many can he name?"
+          },
+          activities:[
+            {emoji:"🌎",title:"Country Quiz",desc:"Look at a world map together. He names as many Spanish-speaking countries as he can. Aim for 8+."},
+            {emoji:"🏛️",title:"Cultural Presentation Prep",desc:"Choose one Spanish-speaking city. Find 3 facts about it to share: food, monument, something cool."},
+            {emoji:"✍️",title:"Travel Journal Entry",desc:"Write a 5-sentence journal entry as if you're visiting a Spanish-speaking city. Use 'Estoy en...', 'Es famoso por...', 'Me gusta...'"},
+          ],
+          challenge:{title:"🗺️ Virtual Field Trip Final Project",desc:"Present your chosen city to Godmommy in Spanish — at least 4 sentences covering where it is, what it's famous for, and why you'd like to visit.",prompt:'"Mi ciudad favorita es ___ en ___. Es famosa por ___ y ___. Me gustaría visitar porque..."'},
+          notes:["This is the May wrap-up week — weave in vocabulary from ALL 4 weeks","The city presentation is the month's culminating activity — be enthusiastic about it!","Take note of which city he picks — it'll be fun to reference all year"]
+        },
+        wed: {
+          review:["la cultura","el país","es famoso/a por","me gustaría visitar","hablan español"],
+          vocab:[
+            {es:"el continente",pr:"el kohn-tee-NEHN-teh",en:"continent"},
+            {es:"América Latina",pr:"ah-MEH-ree-kah lah-TEE-nah",en:"Latin America"},
+            {es:"el Caribe",pr:"el kah-REE-beh",en:"the Caribbean"},
+            {es:"Europa",pr:"eh-oo-ROH-pah",en:"Europe"},
+            {es:"¡Buen viaje!",pr:"bwehn BYAH-heh",en:"Have a good trip!"},
+          ],
+          grammar:{
+            title:"May Full Month Review",
+            rule:"Review all key structures from May: voy a, prepositions, ¿cuánto cuesta?, and talking about cities.",
+            examples:[
+              {es:"Voy al mercado en mi ciudad.",en:"I go to the market in my city."},
+              {es:"El museo está enfrente del parque.",en:"The museum is in front of the park."},
+              {es:"Me gustaría visitar México algún día.",en:"I would like to visit Mexico someday."},
+            ],
+            tip:"🏆 Month complete! Remind him: he now knows 60+ Spanish words just from May."
+          },
+          activities:[
+            {emoji:"🎮",title:"May Mega Review Game",desc:"Quiz bowl style: ask 20 rapid questions from all 4 May weeks. Award points for correct answers."},
+            {emoji:"🎤",title:"City Presentation",desc:"He gives his full city presentation from Monday's challenge. Celebrate it — this is a BIG accomplishment!"},
+          ],
+          challenge:{title:"🏆 May Month Challenge",desc:"Write a postcard from your dream Spanish-speaking city. Include where you are, what you see, what you're eating, and a greeting.",prompt:'"¡Hola! Estoy en Ciudad de México. Hoy visité el Zócalo. Comí tacos y son deliciosos. ¡Buen viaje!"'},
+          notes:["Full month celebration! Acknowledge how much he's learned","Send the postcard home as a keepsake — a real print-out would be special","Preview June: '¡El próximo mes vamos a aprender sobre el cuerpo y el verano!'"]
+        },
+        ind: {
+          video:{id:"mMFBzBQX7xg", title:"Spanish Speaking Countries Song", channel:"Calico Spanish"},
+          workbook:{
+            title:"Week 4 — Around the Spanish-Speaking World",
+            instruction:"Use what you've learned all month to answer these questions in Spanish.",
+            items:[
+              {label:"1. Name a country where people speak Spanish: ___",answer:"México (or any valid country)",blank:true},
+              {label:"2. How do you say 'I would like to visit'? ___",answer:"me gustaría visitar",blank:true},
+              {label:"3. Complete: España es famosa ___ su historia.",answer:"por",blank:true},
+              {label:"4. '¡___ viaje!' means 'Have a good trip!'",answer:"Buen",blank:true},
+              {label:"5. Write the Spanish word for 'culture': ___",answer:"la cultura",blank:true},
+            ],
+            bank:["México","me gustaría visitar","por","Buen","la cultura","el país","continente"]
+          }
+        }
+      }
+    ]
+  },
+  jun: {
+    label:"Junio / June", emoji:"☀️", theme:"The Body & How I Feel",
+    color:"mh-jun", tags:["💪 Body Parts","😊 Feelings","🌊 Summer"],
+    weeks:[
+      {
+        mon:{
+          vocab:[
+            {es:"el cuerpo",pr:"el KWEHR-poh",en:"the body"},
+            {es:"la cabeza",pr:"lah kah-BEH-sah",en:"head"},
+            {es:"los ojos",pr:"lohs OH-hohs",en:"eyes"},
+            {es:"la nariz",pr:"lah nah-REES",en:"nose"},
+            {es:"la boca",pr:"lah BOH-kah",en:"mouth"},
+            {es:"las orejas",pr:"lahs oh-REH-hahs",en:"ears"},
+            {es:"el cuello",pr:"el KWEH-yoh",en:"neck"},
+            {es:"el hombro",pr:"el OHM-broh",en:"shoulder"},
+            {es:"el brazo",pr:"el BRAH-soh",en:"arm"},
+            {es:"la mano",pr:"lah MAH-noh",en:"hand"},
+          ],
+          grammar:{
+            title:"Parts of the Body — Head & Upper Body",
+            rule:"Use <b>tengo</b> (I have) and <b>toco</b> (I touch) to practice body parts in sentences.",
+            examples:[
+              {es:"Toco mi cabeza.",en:"I touch my head."},
+              {es:"Tengo dos brazos.",en:"I have two arms."},
+              {es:"¿Dónde están tus ojos?",en:"Where are your eyes?"},
+            ],
+            tip:"🎵 Play Head, Shoulders, Knees & Toes en español — 'Cabeza, hombros, rodillas, pies!'"
+          },
+          activities:[
+            {emoji:"🎵",title:"Cabeza, Hombros...",desc:"Sing Head, Shoulders, Knees & Toes in Spanish three times — first slow, then normal speed, then fast!"},
+            {emoji:"🖼️",title:"Label the Body",desc:"Draw a large outline of a person. Label as many body parts as you can in Spanish."},
+            {emoji:"🕹️",title:"Simón Dice (Simon Says)",desc:"Play Simon Says entirely in Spanish: 'Simón dice ¡toca la nariz!' Only follow the command if 'Simón dice' is said."},
+          ],
+          challenge:{title:"🏃 Body Part Story",desc:"Make up a short story where each sentence uses a different body part. Try to use all 10 from today!",prompt:'"Mi cabeza tiene una idea. Con mis manos, escribo. Con mis ojos, leo..."'},
+          notes:["This is one of the most fun units — kinesthetic learning works great here","Simon Says is gold for this unit — play it at the start of EVERY session as warm-up","He knows 'me duele' from prior vocab — connect it to today's body parts immediately"]
+        },
+        wed:{
+          review:["la cabeza","los ojos","la nariz","el brazo","la mano"],
+          vocab:[
+            {es:"la pierna",pr:"lah PYEHR-nah",en:"leg"},
+            {es:"el pie",pr:"el PYEH",en:"foot"},
+            {es:"la rodilla",pr:"lah roh-DEE-yah",en:"knee"},
+            {es:"el estómago",pr:"el ehs-TOH-mah-goh",en:"stomach"},
+            {es:"la espalda",pr:"lah ehs-PAHL-dah",en:"back"},
+          ],
+          grammar:{
+            title:"'Me duele' — My ___ Hurts",
+            rule:"<b>Me duele</b> = one thing hurts | <b>Me duelen</b> = two or more things hurt",
+            examples:[
+              {es:"Me duele la cabeza.",en:"My head hurts."},
+              {es:"Me duele el estómago.",en:"My stomach hurts."},
+              {es:"Me duelen las piernas.",en:"My legs hurt."},
+            ],
+            tip:"💡 'Duele' → one body part | 'Duelen' → more than one. It changes like a/an in English!"
+          },
+          activities:[
+            {emoji:"🏥",title:"Doctor Roleplay",desc:"One person is the doctor (el doctor / la doctora), one is the patient. Patient says what hurts, doctor asks follow-up questions."},
+            {emoji:"🎨",title:"Full Body Label",desc:"Add lower body to Monday's drawing. Complete the full-body labeled diagram."},
+          ],
+          challenge:{title:"🏆 Week 1 Body Check",desc:"Rapid-fire: point to 15 body parts. He names each one in Spanish. Score it together.",prompt:"Aim for 13/15 or better — that's an A in Spanish class!"},
+          notes:["The doctor roleplay is great for older kids — make it dramatic!","'Me duelen los pies' is actually useful — ask this after he's been active","Full-body diagram is a great keepsake — let him color it"]
+        },
+        ind:{
+          video:{id:"TronF-_RVHE", title:"Body Parts in Spanish for Kids", channel:"Rockalingua"},
+          workbook:{
+            title:"Week 1 — Mi Cuerpo (My Body)",
+            instruction:"Fill in the blanks with the correct Spanish body part.",
+            items:[
+              {label:"1. I see with my ___ (eyes): los ___",answer:"ojos",blank:true},
+              {label:"2. I hear with my ___ (ears): las ___",answer:"orejas",blank:true},
+              {label:"3. 'My stomach hurts': Me duele el ___",answer:"estómago",blank:true},
+              {label:"4. 'My legs hurt': Me ___ las piernas",answer:"duelen",blank:true},
+              {label:"5. Write the Spanish word for 'knee': la ___",answer:"rodilla",blank:true},
+            ],
+            bank:["ojos","orejas","estómago","duelen","rodilla","cabeza","manos"]
+          }
+        }
+      },
+      {
+        mon:{
+          vocab:[
+            {es:"estoy bien",pr:"ehs-TOY byehn",en:"I am well / fine"},
+            {es:"estoy enfermo/a",pr:"ehs-TOY ehn-FEHR-moh",en:"I am sick"},
+            {es:"estoy cansado/a",pr:"ehs-TOY kahn-SAH-doh",en:"I am tired"},
+            {es:"estoy contento/a",pr:"ehs-TOY kohn-TEHN-toh",en:"I am happy"},
+            {es:"estoy triste",pr:"ehs-TOY TREES-teh",en:"I am sad"},
+            {es:"tengo hambre",pr:"TEHN-goh AHM-breh",en:"I am hungry"},
+            {es:"tengo sed",pr:"TEHN-goh sehd",en:"I am thirsty"},
+            {es:"tengo sueño",pr:"TEHN-goh SWEH-nyoh",en:"I am sleepy"},
+            {es:"tengo frío",pr:"TEHN-goh FREE-oh",en:"I am cold"},
+            {es:"tengo calor",pr:"TEHN-goh kah-LOHR",en:"I am hot"},
+          ],
+          grammar:{
+            title:"Estar vs. Tener for Feelings",
+            rule:"<b>Estoy</b> = I am (feelings/states) | <b>Tengo</b> = I have (physical needs like hunger/thirst)",
+            examples:[
+              {es:"Estoy cansado después de la escuela.",en:"I am tired after school."},
+              {es:"Tengo hambre. ¿Podemos comer?",en:"I'm hungry. Can we eat?"},
+              {es:"¿Cómo estás hoy?",en:"How are you today?"},
+            ],
+            tip:"🔑 'Tengo hambre' = literally 'I have hunger.' Spanish uses 'tener' where English uses 'to be' for physical needs!"
+          },
+          activities:[
+            {emoji:"🎭",title:"Feelings Charades",desc:"Act out a feeling without speaking. Other person says it in Spanish: '¡Estás cansado!' or '¡Tienes hambre!'"},
+            {emoji:"📅",title:"Daily Check-In Practice",desc:"Go through a whole day: morning, school, after school, bedtime. For each, say how you feel using estoy/tengo."},
+            {emoji:"💬",title:"Conversation Drill",desc:"Q&A: '¿Cómo estás?' — answer with a feeling + reason: 'Estoy contento porque es viernes.'"},
+          ],
+          challenge:{title:"😊 Feelings Journal",desc:"Write 6 sentences describing how you feel at 6 different times of day. Use both 'estoy' and 'tengo' constructions.",prompt:'"Por la mañana, tengo sueño. En la escuela, estoy contento. Después de comer, estoy bien..."'},
+          notes:["'¿Cómo estás?' should become your standard session opener — do it EVERY class","Connect to February's daily routine — feelings go WITH activities","These phrases are immediately useful in real life — big motivation boost"]
+        },
+        wed:{
+          review:["estoy cansado/a","tengo hambre","tengo sed","estoy enfermo/a","tengo frío"],
+          vocab:[
+            {es:"el verano",pr:"el beh-RAH-noh",en:"summer"},
+            {es:"hace calor",pr:"AH-seh kah-LOHR",en:"it's hot (weather)"},
+            {es:"la playa",pr:"lah PLAH-yah",en:"beach"},
+            {es:"nadar",pr:"nah-DAHR",en:"to swim"},
+            {es:"el helado",pr:"el eh-LAH-doh",en:"ice cream"},
+          ],
+          grammar:{
+            title:"Summer Phrases + Feelings Combined",
+            rule:"Combine weather vocab (March) + feelings (this week) + summer activities.",
+            examples:[
+              {es:"Hace calor y quiero nadar.",en:"It's hot and I want to swim."},
+              {es:"En el verano, estoy muy contento.",en:"In the summer, I am very happy."},
+              {es:"Tengo calor, necesito un helado.",en:"I'm hot, I need an ice cream."},
+            ],
+            tip:"🌊 Summer is the perfect context — use REAL plans for the summer to make it personal!"
+          },
+          activities:[
+            {emoji:"☀️",title:"Summer Plans in Spanish",desc:"Write or say 5 things you plan to do this summer using 'voy a' + activity + feeling."},
+            {emoji:"🍦",title:"Ice Cream Order Roleplay",desc:"Set up an imaginary ice cream shop. Order in Spanish: flavor, size, feeling ('tengo mucho calor')."},
+          ],
+          challenge:{title:"🏆 Week 2 Wrap-Up",desc:"A full personal conversation: greeting, how you feel, why, and what you want to do today. At least 6 exchanges.",prompt:"Use estoy, tengo, quiero, and voy a — all in one natural conversation!"},
+          notes:["End of June Week 2 — summer is just starting, use the energy!","The ice cream roleplay is one of his favorites — take your time with it","Connect weather phrases from March — he definitely remembers 'hace calor'"]
+        },
+        ind:{
+          video:{id:"EvTmNT_GLQY", title:"How Are You Feeling in Spanish?", channel:"Basho & Friends"},
+          workbook:{
+            title:"Week 2 — ¿Cómo te sientes?",
+            instruction:"Match the feeling to the situation. Fill in 'estoy' or 'tengo' + the correct word.",
+            items:[
+              {label:"1. You haven't eaten since breakfast: Yo ___ hambre.",answer:"tengo",blank:true},
+              {label:"2. It's your birthday! Yo ___ muy contento.",answer:"estoy",blank:true},
+              {label:"3. You stayed up late last night: Yo ___ sueño.",answer:"tengo",blank:true},
+              {label:"4. It's 95 degrees outside: Yo ___ calor.",answer:"tengo",blank:true},
+              {label:"5. Write a sentence about how you feel right now:",answer:"(open answer)",blank:true},
+            ],
+            bank:["tengo","estoy","hambre","sueño","calor","frío","cansado"]
+          }
+        }
+      },
+      {
+        mon:{
+          vocab:[
+            {es:"la cara",pr:"lah KAH-rah",en:"face"},
+            {es:"el pelo",pr:"el PEH-loh",en:"hair"},
+            {es:"los dientes",pr:"lohs DYEHN-tehs",en:"teeth"},
+            {es:"la lengua",pr:"lah LEHN-gwah",en:"tongue"},
+            {es:"los dedos",pr:"lohs DEH-dohs",en:"fingers / toes"},
+            {es:"la uña",pr:"lah OON-yah",en:"fingernail"},
+            {es:"el codo",pr:"el KOH-doh",en:"elbow"},
+            {es:"la muñeca",pr:"lah moon-YEH-kah",en:"wrist"},
+            {es:"el tobillo",pr:"el toh-BEE-yoh",en:"ankle"},
+            {es:"la frente",pr:"lah FREHN-teh",en:"forehead"},
+          ],
+          grammar:{
+            title:"Body Adjectives — Describing Physical Features",
+            rule:"Use <b>tengo + adjective + body part</b> to describe yourself.",
+            examples:[
+              {es:"Tengo el pelo largo.",en:"I have long hair."},
+              {es:"Tengo los ojos oscuros.",en:"I have dark eyes."},
+              {es:"Ella tiene la cara redonda.",en:"She has a round face."},
+            ],
+            tip:"🪞 Do this activity in front of a mirror or use photos — seeing makes vocabulary stick!"
+          },
+          activities:[
+            {emoji:"🪞",title:"Mirror Description",desc:"Look in a mirror (or phone camera). Describe your own face and hair using 5+ Spanish sentences."},
+            {emoji:"🎨",title:"Draw & Describe",desc:"Draw a funny monster face. Label every body part, then write 5 sentences describing it."},
+            {emoji:"🕵️",title:"Guess Who in Spanish",desc:"Describe a famous person or character using only body part descriptions. Other person guesses who it is."},
+          ],
+          challenge:{title:"👤 Self-Portrait Description",desc:"Write an 8-sentence description of yourself — hair, eyes, height, face features — entirely in Spanish.",prompt:'"Me llamo ___. Tengo el pelo ___ y los ojos ___. Mi cara es ___. Tengo ___ dedos..."'},
+          notes:["'La muñeca' means both wrist and doll — kids LOVE that fun fact","The Guess Who game works great with sports figures or cartoon characters he likes","Self-portrait is a great confidence builder — frame it as a final project"]
+        },
+        wed:{
+          review:["el pelo","los dientes","la frente","el codo","los dedos"],
+          vocab:[
+            {es:"alto/a",pr:"AHL-toh",en:"tall"},
+            {es:"bajo/a",pr:"BAH-hoh",en:"short"},
+            {es:"fuerte",pr:"FWEHR-teh",en:"strong"},
+            {es:"delgado/a",pr:"del-GAH-doh",en:"slim / thin"},
+            {es:"el color",pr:"el koh-LOHR",en:"color"},
+          ],
+          grammar:{
+            title:"Full Physical Description Sentences",
+            rule:"Combine height, build, hair, and eye color into a complete physical description.",
+            examples:[
+              {es:"Soy alto y tengo el pelo negro.",en:"I am tall and I have black hair."},
+              {es:"Mi amigo es bajo y fuerte.",en:"My friend is short and strong."},
+              {es:"¿De qué color son tus ojos?",en:"What color are your eyes?"},
+            ],
+            tip:"🎯 By end of this week he should be able to describe any person in 3–4 Spanish sentences!"
+          },
+          activities:[
+            {emoji:"📸",title:"Celebrity Description",desc:"Use a photo of a famous athlete or character he likes. Write a 5-sentence physical description in Spanish."},
+            {emoji:"🔍",title:"20 Questions — Who Am I?",desc:"One person thinks of someone. Only answer with sí/no to body description questions in Spanish."},
+          ],
+          challenge:{title:"🏆 Week 3 Wrap-Up",desc:"Describe TWO people (one from real life, one fictional) in Spanish. At least 5 sentences each.",prompt:"Use: soy/es, tengo/tiene, adjectives, body parts, and colors!"},
+          notes:["Physical descriptions tie directly into September's family unit — plant the seeds now","'Fuerte' is great to practice — kids always flex when they say it","The celebrity description activity lands really well — let him choose who"]
+        },
+        ind:{
+          video:{id:"OScGaHmM-E4", title:"Describe People in Spanish", channel:"Butterfly Spanish"},
+          workbook:{
+            title:"Week 3 — ¿Cómo eres?",
+            instruction:"Write a complete Spanish sentence for each description clue.",
+            items:[
+              {label:"1. Describe your hair color and length:",answer:"(open - Tengo el pelo...)",blank:true},
+              {label:"2. Describe your eye color:",answer:"(open - Tengo los ojos...)",blank:true},
+              {label:"3. Are you tall or short? Write a sentence:",answer:"(open - Soy alto/a or bajo/a)",blank:true},
+              {label:"4. 'She has a round face': Ella tiene la cara ___",answer:"redonda",blank:true},
+              {label:"5. 'My friend has black hair': Mi amigo tiene el pelo ___",answer:"negro",blank:true},
+            ],
+            bank:["redonda","negro","largo","corto","alto","bajo","oscuro"]
+          }
+        }
+      },
+      {
+        mon:{
+          vocab:[
+            {es:"nadar",pr:"nah-DAHR",en:"to swim"},
+            {es:"correr",pr:"koh-RREHR",en:"to run"},
+            {es:"saltar",pr:"sahl-TAHR",en:"to jump"},
+            {es:"jugar",pr:"hoo-GAHR",en:"to play"},
+            {es:"descansar",pr:"dehs-kahn-SAHR",en:"to rest"},
+            {es:"caminar",pr:"kah-mee-NAHR",en:"to walk"},
+            {es:"bailar",pr:"bah-ee-LAHR",en:"to dance"},
+            {es:"cantar",pr:"kahn-TAHR",en:"to sing"},
+            {es:"escuchar música",pr:"ehs-koo-CHAHR MOO-see-kah",en:"to listen to music"},
+            {es:"el deporte",pr:"el deh-POHR-teh",en:"sport"},
+          ],
+          grammar:{
+            title:"-AR Verbs — Present Tense",
+            rule:"Most -AR verbs follow the same pattern: remove -AR and add the ending. <b>Yo = -o</b> | <b>Tú = -as</b>",
+            examples:[
+              {es:"Yo nado en la piscina.",en:"I swim in the pool."},
+              {es:"Tú bailas muy bien.",en:"You dance very well."},
+              {es:"Yo corro en el parque todos los días.",en:"I run in the park every day."},
+            ],
+            tip:"🏃 -AR verb chant: 'nadar → nado, bailar → bailo, cantar → canto, correr → corro' — make it a rhythm!"
+          },
+          activities:[
+            {emoji:"🏃",title:"Action Verb Relay",desc:"Say a verb, do the action, use it in a sentence. 'Bailar! (dances) ¡Yo bailo con mi familia!'"},
+            {emoji:"📊",title:"My Activity Chart",desc:"Make a weekly chart of activities. Write what you do each day using -AR verb sentences: 'Los lunes, yo nado...'"},
+            {emoji:"🎤",title:"Verb Conjugation Rap",desc:"Make up a silly rap or song using at least 5 -AR verbs conjugated in first person."},
+          ],
+          challenge:{title:"🏆 June Month Review",desc:"Write 10 sentences about your ideal summer day. Use body parts, feelings, verbs, and summer vocab from the whole month.",prompt:'"Por la mañana, yo nado en la piscina. Tengo calor pero estoy contento. Mi cara está..."'},
+          notes:["-AR verb conjugation is a BIG grammar milestone — celebrate it!","The action relay is kinesthetic and fast-paced — perfect for keeping energy up","Connect to February verbs (comer, beber, dormir) to show the full verb picture"]
+        },
+        wed:{
+          review:["nadar","correr","bailar","jugar","cantar"],
+          vocab:[
+            {es:"el fútbol",pr:"el FOOT-bol",en:"soccer"},
+            {es:"el béisbol",pr:"el BAYS-bol",en:"baseball"},
+            {es:"el baloncesto",pr:"el bah-lohn-SEHS-toh",en:"basketball"},
+            {es:"me encanta",pr:"meh ehn-KAHN-tah",en:"I love (it)"},
+            {es:"¡Qué divertido!",pr:"keh dee-behr-TEE-doh",en:"How fun!"},
+          ],
+          grammar:{
+            title:"June Full Month Review",
+            rule:"Bring together body parts, feelings, physical descriptions, and action verbs.",
+            examples:[
+              {es:"Me encanta el fútbol. Juego todos los sábados.",en:"I love soccer. I play every Saturday."},
+              {es:"Después de correr, me duelen las piernas.",en:"After running, my legs hurt."},
+              {es:"¡Qué divertido fue el verano!",en:"How fun the summer was!"},
+            ],
+            tip:"🏆 He now knows 90+ Spanish words! That is genuinely impressive for a 10-year-old."
+          },
+          activities:[
+            {emoji:"🎮",title:"June Mega Review Game",desc:"Flashcard speed round — all June vocab. Set a timer, see how many he gets in 60 seconds!"},
+            {emoji:"🎤",title:"Sports Interview",desc:"Interview each other about favorite sports in Spanish. Use me gusta, me encanta, juego, and ¿cuál es tu deporte favorito?"},
+          ],
+          challenge:{title:"🏆 June Month Challenge",desc:"Record a 1-minute voice memo or video: introduce yourself, describe yourself physically, say how you're feeling, and describe your favorite summer sport.",prompt:"Put it all together — this is basically a mini Spanish presentation!"},
+          notes:["Month-end celebration! He's halfway through Year 1","The voice memo challenge is optional but powerful — suggest it as a fun idea","Preview July: 'El próximo mes vamos a aprender a decir la hora!'"]
+        },
+        ind:{
+          video:{id:"_BFZK7UPXig", title:"Sports in Spanish for Kids", channel:"Rockalingua"},
+          workbook:{
+            title:"Week 4 — Summer Activities",
+            instruction:"Conjugate the verb and complete each sentence.",
+            items:[
+              {label:"1. (nadar) Yo ___ en la piscina.",answer:"nado",blank:true},
+              {label:"2. (bailar) Tú ___ muy bien.",answer:"bailas",blank:true},
+              {label:"3. (correr) Yo ___ en el parque.",answer:"corro",blank:true},
+              {label:"4. Write: 'I love soccer' in Spanish:",answer:"Me encanta el fútbol",blank:true},
+              {label:"5. Write: 'How fun!' in Spanish:",answer:"¡Qué divertido!",blank:true},
+            ],
+            bank:["nado","bailas","corro","Me encanta el fútbol","¡Qué divertido!","juego","canto"]
+          }
+        }
+      }
+    ]
+  },
+  jul:{
+    label:"Julio / July", emoji:"🎆", theme:"Telling Time & Daily Schedule",
+    color:"mh-jul", tags:["🕐 Time","📅 Schedule","🔢 Numbers 1–60"],
+    weeks:[
+      {
+        mon:{
+          vocab:[
+            {es:"¿Qué hora es?",pr:"keh OH-rah ehs",en:"What time is it?"},
+            {es:"Es la una",pr:"ehs lah OO-nah",en:"It is 1:00"},
+            {es:"Son las dos",pr:"sohn lahs dohs",en:"It is 2:00"},
+            {es:"Son las tres",pr:"sohn lahs trehs",en:"It is 3:00"},
+            {es:"Son las cuatro",pr:"sohn lahs KWAH-troh",en:"It is 4:00"},
+            {es:"Son las cinco",pr:"sohn lahs SEEN-koh",en:"It is 5:00"},
+            {es:"Son las seis",pr:"sohn lahs says",en:"It is 6:00"},
+            {es:"y media",pr:"ee MEH-dyah",en:"and a half (:30)"},
+            {es:"y cuarto",pr:"ee KWAHR-toh",en:"and a quarter (:15)"},
+            {es:"de la mañana",pr:"deh lah mahn-YAH-nah",en:"in the morning (AM)"},
+          ],
+          grammar:{
+            title:"Telling Time — The Basics",
+            rule:"Use <b>Es la una</b> only for 1:00. Use <b>Son las + number</b> for all other hours.",
+            examples:[
+              {es:"Es la una de la tarde.",en:"It is 1:00 PM."},
+              {es:"Son las tres y media.",en:"It is 3:30."},
+              {es:"Son las ocho y cuarto de la mañana.",en:"It is 8:15 AM."},
+            ],
+            tip:"⏰ Draw 6 clock faces together. Write the time in Spanish under each one. Check each other's work!"
+          },
+          activities:[
+            {emoji:"⏰",title:"Clock Face Practice",desc:"Draw 8 clock faces showing different times. Write the Spanish time expression under each one."},
+            {emoji:"🎲",title:"What Time Is It?",desc:"One person draws a clock time on paper, other person says it in Spanish. First to 10 correct wins."},
+            {emoji:"📱",title:"Real Time Check",desc:"Ask '¿Qué hora es?' every 5 minutes during the session. Answer in Spanish each time."},
+          ],
+          challenge:{title:"⏰ Time Quiz",desc:"Write 8 different times (mix of :00, :15, :30). Write each one in Spanish. Aim for 7/8!",prompt:"Include at least one AM time and one PM time in your answers."},
+          notes:["'Es la una' vs 'Son las...' — drill this distinction until it's automatic","He should know numbers 1–12 from earlier vocab — review quickly if needed","Use an actual clock or clock app to make it feel real"]
+        },
+        wed:{
+          review:["¿Qué hora es?","Son las tres y media","Es la una","y cuarto","de la mañana"],
+          vocab:[
+            {es:"menos cuarto",pr:"MEH-nohs KWAHR-toh",en:"quarter to (x:45)"},
+            {es:"de la tarde",pr:"deh lah TAR-deh",en:"in the afternoon (PM)"},
+            {es:"de la noche",pr:"deh lah NOH-cheh",en:"at night"},
+            {es:"el mediodía",pr:"el meh-dyoh-DEE-ah",en:"noon"},
+            {es:"la medianoche",pr:"lah meh-dyah-NOH-cheh",en:"midnight"},
+          ],
+          grammar:{
+            title:"Quarter To & AM/PM",
+            rule:"<b>Menos cuarto</b> = quarter to. <b>Son las cinco menos cuarto</b> = 4:45",
+            examples:[
+              {es:"Son las cinco menos cuarto.",en:"It is 4:45. (quarter to 5)"},
+              {es:"Son las doce del mediodía.",en:"It is noon."},
+              {es:"Son las doce de la noche.",en:"It is midnight."},
+            ],
+            tip:"🧩 'Menos cuarto' is tricky! Think: '5 minutes MINUS a quarter = 4:45.' Draw it on a clock every time."
+          },
+          activities:[
+            {emoji:"📺",title:"TV Schedule Game",desc:"Create a fake Spanish TV schedule with 6 shows and their air times. Ask '¿A qué hora empieza ___?' Answer in Spanish."},
+            {emoji:"🗓️",title:"My Day Timeline",desc:"Draw a timeline of your school day with 8 events. Write the time and activity for each in Spanish."},
+          ],
+          challenge:{title:"🏆 Week 1 Time Challenge",desc:"Write out your complete school day schedule in Spanish — 10 events with exact times using AM/PM correctly.",prompt:'"A las siete de la mañana, me despierto. A las ocho menos cuarto, voy a la escuela..."'},
+          notes:["'Menos cuarto' is consistently the hardest time concept — extra clock drawing helps","TV schedule game is high-engagement — use his actual favorite shows","Connect to February daily routine vocab — he has the activities, now he has the times!"]
+        },
+        ind:{
+          video:{id:"zNSuLFJOKJo", title:"Telling Time in Spanish", channel:"Calico Spanish"},
+          workbook:{
+            title:"Week 1 — ¿Qué hora es?",
+            instruction:"Write the correct time in Spanish for each clock description.",
+            items:[
+              {label:"1. The clock shows 3:00: Son las ___",answer:"tres",blank:true},
+              {label:"2. The clock shows 1:30: Es la una y ___",answer:"media",blank:true},
+              {label:"3. The clock shows 7:15: Son las siete y ___",answer:"cuarto",blank:true},
+              {label:"4. The clock shows 9:45: Son las ___ menos cuarto",answer:"diez",blank:true},
+              {label:"5. 'It is noon' in Spanish: Son las ___ del mediodía",answer:"doce",blank:true},
+            ],
+            bank:["tres","media","cuarto","diez","doce","ocho","once"]
+          }
+        }
+      },
+      {mon:{vocab:[{es:"lunes",pr:"LOO-nehs",en:"Monday"},{es:"martes",pr:"MAR-tehs",en:"Tuesday"},{es:"miércoles",pr:"MYEHR-koh-lehs",en:"Wednesday"},{es:"jueves",pr:"HWEH-behs",en:"Thursday"},{es:"viernes",pr:"BYEHR-nehs",en:"Friday"},{es:"sábado",pr:"SAH-bah-doh",en:"Saturday"},{es:"domingo",pr:"doh-MEEN-goh",en:"Sunday"},{es:"la semana",pr:"lah seh-MAH-nah",en:"the week"},{es:"hoy",pr:"oy",en:"today"},{es:"mañana",pr:"mahn-YAH-nah",en:"tomorrow"},],grammar:{title:"Days of the Week",rule:"Days of the week are NOT capitalized in Spanish. Use <b>el</b> for 'on' a specific day.",examples:[{es:"Hoy es miércoles.",en:"Today is Wednesday."},{es:"El lunes tengo clase de español.",en:"On Monday I have Spanish class."},{es:"¿Qué día es mañana?",en:"What day is tomorrow?"},],tip:"📅 In Spanish, the week starts on MONDAY (lunes), not Sunday! Calendars look different."},activities:[{emoji:"📅",title:"Calendar Creation",desc:"Draw a weekly calendar. Fill in activities for each day in Spanish using time + activity."},{emoji:"🎵",title:"Days of the Week Song",desc:"Learn the days of the week to any simple tune. Sing them forward AND backward."},{emoji:"⏰",title:"Schedule Combo",desc:"Write 5 sentences combining day + time + activity: 'El martes a las cuatro, yo nado.'"},],challenge:{title:"📅 My Weekly Schedule",desc:"Write out a full week schedule in Spanish — day, time, and activity for each day.",prompt:'"El lunes a las tres de la tarde, yo... El martes a las..."'},notes:["Days are trickier than they look — the week starting on Monday confuses kids at first","The calendar creation activity gives a tangible takeaway","He uses lunes/miércoles for his Spanish sessions — make that connection immediately!"]},wed:{review:["lunes","miércoles","viernes","hoy","mañana"],vocab:[{es:"ayer",pr:"ah-YEHR",en:"yesterday"},{es:"esta semana",pr:"EHS-tah seh-MAH-nah",en:"this week"},{es:"la próxima semana",pr:"lah PROHK-see-mah",en:"next week"},{es:"el fin de semana",pr:"el feen deh seh-MAH-nah",en:"the weekend"},{es:"siempre",pr:"SYEHM-preh",en:"always"},],grammar:{title:"Time Expressions",rule:"Connect time expressions with activities to make natural, flowing sentences.",examples:[{es:"Ayer fui al parque.",en:"Yesterday I went to the park."},{es:"El fin de semana, siempre duermo tarde.",en:"On weekends, I always sleep late."},{es:"La próxima semana tengo un examen.",en:"Next week I have a test."},],tip:"🕐 These time words (ayer, hoy, mañana) are the glue of storytelling in Spanish!"},activities:[{emoji:"📖",title:"My Week Story",desc:"Tell the story of your week in Spanish using ayer, hoy, mañana, esta semana, and specific days."},{emoji:"🎯",title:"Time Expression Relay",desc:"Flash a time expression card, student uses it in a sentence immediately. Keep pace fast!"},],challenge:{title:"🏆 Week 2 Wrap-Up",desc:"Write a paragraph (6+ sentences) about your week: what you did yesterday, what you're doing today, and what you'll do tomorrow/this weekend.",prompt:'"Ayer, yo... Hoy, yo... Mañana, voy a... El fin de semana..."'},notes:["'El fin de semana' is highly motivating — he'll want to talk about weekends all day","Ayer/hoy/mañana are used in EVERY future lesson — invest in making them automatic","Quick time-telling review from Week 1 before starting"]},ind:{video:{id:"yONHJ6M0UZc",title:"Days of the Week in Spanish",channel:"Calico Spanish"},workbook:{title:"Week 2 — Days & Time Expressions",instruction:"Fill in the blank with the correct day or time expression.",items:[{label:"1. Spanish class is on ___ and ___.",answer:"lunes / miércoles",blank:true},{label:"2. 'Yesterday' in Spanish: ___",answer:"ayer",blank:true},{label:"3. 'The weekend' in Spanish: el ___ de semana",answer:"fin",blank:true},{label:"4. Today is Tuesday: ___ es martes.",answer:"Hoy",blank:true},{label:"5. Complete: El ___, yo descanso. (Sunday)",answer:"domingo",blank:true},],bank:["lunes / miércoles","ayer","fin","Hoy","domingo","mañana","viernes"]}}},
+      {mon:{vocab:[{es:"enero",pr:"eh-NEH-roh",en:"January"},{es:"febrero",pr:"feh-BREH-roh",en:"February"},{es:"marzo",pr:"MAR-soh",en:"March"},{es:"abril",pr:"ah-BREEL",en:"April"},{es:"mayo",pr:"MAH-yoh",en:"May"},{es:"junio",pr:"HOO-nyoh",en:"June"},{es:"julio",pr:"HOO-lyoh",en:"July"},{es:"agosto",pr:"ah-GOHS-toh",en:"August"},{es:"septiembre",pr:"sehp-TYEHM-breh",en:"September"},{es:"octubre",pr:"ohk-TOO-breh",en:"October"},],grammar:{title:"Months of the Year",rule:"Months are NOT capitalized in Spanish. Use <b>en + month</b> for 'in [month]'.",examples:[{es:"Mi cumpleaños es en julio.",en:"My birthday is in July."},{es:"Empezamos español en noviembre.",en:"We started Spanish in November."},{es:"En agosto, regreso a la escuela.",en:"In August, I go back to school."},],tip:"🗓️ Months are easy to remember because many sound like English! enero=January, febrero=February..."},activities:[{emoji:"🗓️",title:"Birthday Month Round-Up",desc:"Ask about birthdays of family members. Write: '_____ cumpleaños es en _____.' for at least 5 people."},{emoji:"📅",title:"Monthly Events",desc:"Name one important event or holiday for each month. Write it in Spanish using 'En ___, hay/es...'"},{emoji:"✍️",title:"Month Sentences",desc:"Write a sentence for each month describing the weather or an activity: 'En enero, hace frío.'"},],challenge:{title:"📅 The Year in Spanish",desc:"Write 12 sentences — one per month — describing something that happens in that month.",prompt:'"En enero, hace mucho frío. En julio, hace calor y voy a la playa..."'},notes:["Connect months to his actual life — birthdays, school events, holidays","The 'sounds like English' strategy works really well for months — lean into it","'Mi cumpleaños' is a great high-interest vocab item — use it as an anchor"]},wed:{review:["enero","julio","agosto","septiembre","octubre"],vocab:[{es:"noviembre",pr:"noh-BYEHM-breh",en:"November"},{es:"diciembre",pr:"dee-SYEHM-breh",en:"December"},{es:"el año",pr:"el AHN-yoh",en:"year"},{es:"el mes",pr:"el mehs",en:"month"},{es:"¿Cuándo es tu cumpleaños?",pr:"KWAHN-doh",en:"When is your birthday?"},],grammar:{title:"Dates — Month, Day, Year",rule:"Spanish date order: <b>el + day + de + month + de + year</b>",examples:[{es:"Hoy es el 4 de julio.",en:"Today is July 4th."},{es:"Mi cumpleaños es el 12 de septiembre.",en:"My birthday is September 12th."},{es:"El año nuevo es el primero de enero.",en:"New Year is January 1st."},],tip:"📅 Spain and Latin America write dates DAY/MONTH/YEAR — opposite of the US! 4/7 = July 4th."},activities:[{emoji:"🎂",title:"Birthday Card",desc:"Write a bilingual birthday card for someone with the date written correctly in Spanish."},{emoji:"🗓️",title:"Important Dates Quiz",desc:"Name 5 important family or school dates. Write each one fully in Spanish format."},],challenge:{title:"🏆 Week 3 Wrap-Up",desc:"Write a full calendar page for your birth month: every day numbered, important events labeled in Spanish.",prompt:"Practice writing '1 de julio,' '4 de julio,' '15 de julio,' etc. for the full month."},notes:["The day/month inversion is a mind-bender — use the 4th of July as a hook ('el cuatro de julio')","His birthday month is a natural anchor for this lesson","Keep the date format review going — it'll come up constantly all year"]},ind:{video:{id:"XuBdfJ0ICUM",title:"Months of the Year in Spanish",channel:"Rockalingua"},workbook:{title:"Week 3 — Months & Dates",instruction:"Fill in the blanks about months and dates.",items:[{label:"1. 'My birthday is in ___': Mi cumpleaños es en ___",answer:"(write your birth month in Spanish)",blank:true},{label:"2. The month after junio is: ___",answer:"julio",blank:true},{label:"3. Write today's full date in Spanish: el ___ de ___ de 2025",answer:"(today's date)",blank:true},{label:"4. 'In December, it's cold': En ___, hace frío.",answer:"diciembre",blank:true},{label:"5. The last month of the year: ___",answer:"diciembre",blank:true},],bank:["julio","diciembre","noviembre","enero","febrero","marzo","agosto"]}}},
+      {mon:{vocab:[{es:"el número",pr:"el NOO-meh-roh",en:"number"},{es:"once",pr:"OHN-seh",en:"eleven"},{es:"doce",pr:"DOH-seh",en:"twelve"},{es:"trece",pr:"TREH-seh",en:"thirteen"},{es:"catorce",pr:"kah-TOHR-seh",en:"fourteen"},{es:"quince",pr:"KEEN-seh",en:"fifteen"},{es:"veinte",pr:"BAYN-teh",en:"twenty"},{es:"treinta",pr:"TRAYN-tah",en:"thirty"},{es:"cuarenta",pr:"kwah-REHN-tah",en:"forty"},{es:"cincuenta",pr:"seen-KWEHN-tah",en:"fifty"},],grammar:{title:"Numbers 11–60 for Telling Time",rule:"Build numbers 16–19 with dieci- prefix. Build 21–29 with veinti- prefix. 31+ = treinta y uno, etc.",examples:[{es:"Son las dieciséis. (4 PM)",en:"It is 4:00 PM / 16:00."},{es:"Tengo quince años.",en:"I am 15 years old."},{es:"Son las doce y veinte.",en:"It is 12:20."},],tip:"🔢 11–15 are IRREGULAR (once, doce, trece, catorce, quince) — no pattern! Just memorize these 5."},activities:[{emoji:"🔢",title:"Number Drill",desc:"Count from 1–60 together: first all the way through, then count by 5s, then count backward from 30."},{emoji:"⏰",title:"Minutes Practice",desc:"Use numbers 1–59 for minutes. Draw 5 clock times with specific minutes (e.g. 3:22, 7:45) and write them out."},{emoji:"🎲",title:"Math in Spanish",desc:"Simple addition problems in Spanish: '¿Cuánto es quince más veinte?' '¡Treinta y cinco!'"},],challenge:{title:"🏆 July Month Challenge",desc:"Write your complete dream day schedule using correct time expressions, days, and -AR verbs. Include 12 events.",prompt:'"El sábado a las diez y media de la mañana, yo nado en la piscina. A las doce del mediodía..."'},notes:["11–15 are irregular — spend extra time on these specifically","The math in Spanish activity is a great cross-subject connection","Month challenge is the July culminating piece — take the full 10 minutes for it"]},wed:{review:["once","quince","veinte","treinta","cincuenta"],vocab:[{es:"sesenta",pr:"seh-SEHN-tah",en:"sixty"},{es:"el minuto",pr:"el mee-NOO-toh",en:"minute"},{es:"el segundo",pr:"el seh-GOON-doh",en:"second"},{es:"en punto",pr:"ehn POON-toh",en:"exactly / on the dot"},{es:"¿A qué hora...?",pr:"ah keh OH-rah",en:"At what time...?"},],grammar:{title:"July Full Month Review",rule:"Bring time, days, months, and numbers together into natural conversation.",examples:[{es:"¿A qué hora empieza el partido?",en:"At what time does the game start?"},{es:"El partido empieza a las cuatro en punto.",en:"The game starts at exactly 4:00."},{es:"Hoy es martes, el doce de julio.",en:"Today is Tuesday, July 12th."},],tip:"🏆 By end of July he can tell time, say the date, count to 60, and name all 7 days and 12 months — incredible!"},activities:[{emoji:"🎮",title:"July Mega Review",desc:"Speed round: alternate between clock faces (what time?), date cards (read the date), and number cards (say the number). Timer: 2 minutes, count correct answers."},{emoji:"🗓️",title:"Full Date + Time Sentences",desc:"Write 5 sentences combining a day, date, time, and activity — the complete picture."},],challenge:{title:"🏆 July Final Showcase",desc:"Oral challenge: answer 10 questions covering time, days, months, and numbers. Aim for 8/10.",prompt:"Questions: ¿Qué hora es? ¿Qué día es hoy? ¿Cuándo es tu cumpleaños? ¿Cuánto es 20 + 15?"},notes:["July is a dense but crucial month — time and dates are used forever after this","The final oral challenge is a real confidence moment — be warm and celebratory","Preview August: 'El mes que viene, vamos a hablar de la escuela!'"]},ind:{video:{id:"8TJdBdMphlA",title:"Numbers 11-100 in Spanish for Kids",channel:"Calico Spanish"},workbook:{title:"Week 4 — Numbers & Complete Time",instruction:"Write the complete time and date expressions in Spanish.",items:[{label:"1. Write 3:22 PM in Spanish: Son las tres y ___ de la tarde",answer:"veintidós",blank:true},{label:"2. Write the number 45 in Spanish: ___",answer:"cuarenta y cinco",blank:true},{label:"3. 'At what time?' in Spanish: ¿___ qué hora?",answer:"A",blank:true},{label:"4. '4:00 on the dot': Son las cuatro ___ punto",answer:"en",blank:true},{label:"5. Write today's full date in Spanish:",answer:"(open answer)",blank:true},],bank:["veintidós","cuarenta y cinco","A","en","hoy","minuto","segundo"]}}}
+    ]
+  },
+  aug:{label:"Agosto / August",emoji:"📚",theme:"Back to School & Subjects",color:"mh-aug",tags:["🏫 Subjects","📝 Classroom","💬 Opinions"],weeks:[{mon:{vocab:[{es:"las matemáticas",pr:"lahs mah-teh-MAH-tee-kahs",en:"math"},{es:"las ciencias",pr:"lahs SYEN-syahs",en:"science"},{es:"la historia",pr:"lah ees-TOH-ryah",en:"history"},{es:"el arte",pr:"el AHR-teh",en:"art"},{es:"la música",pr:"lah MOO-see-kah",en:"music"},{es:"la educación física",pr:"lah eh-doo-kah-SYOHN FEE-see-kah",en:"PE / gym"},{es:"el inglés",pr:"el een-GLEHS",en:"English class"},{es:"el español",pr:"el ehs-pahn-YOHL",en:"Spanish class"},{es:"la tecnología",pr:"lah tek-noh-loh-HEE-ah",en:"technology"},{es:"el almuerzo",pr:"el ahl-MWEHR-soh",en:"lunch (period)"},],grammar:{title:"Opinions About School Subjects",rule:"Use <b>me gusta / no me gusta</b> + subject. For plural subjects, use <b>me gustan</b>.",examples:[{es:"Me gustan las matemáticas.",en:"I like math."},{es:"No me gusta la historia.",en:"I don't like history."},{es:"¿Te gusta la música?",en:"Do you like music?"},],tip:"📚 'Me gustan las matemáticas' — plural because matemáticas is always plural in Spanish!"},activities:[{emoji:"📋",title:"Class Schedule in Spanish",desc:"Write out his ACTUAL school schedule in Spanish. Label every period and subject."},{emoji:"🗳️",title:"Subject Opinion Poll",desc:"Rate each subject 1–5 stars and write a sentence explaining: 'Me gustan las ciencias porque son interesantes.'"},{emoji:"💬",title:"School Conversation",desc:"Full Q&A: '¿Cuál es tu materia favorita?' '¿A qué hora tienes matemáticas?' Answer using this week's vocab + time from July."},],challenge:{title:"📚 My Class Schedule",desc:"Write a complete bilingual school schedule — 8 periods, each with subject name in Spanish, time, and one opinion sentence.",prompt:'"A las ocho, tengo matemáticas. No me gustan las matemáticas porque son difíciles..."'},notes:["Use HIS actual schedule as the base — it's immediately relevant","Connect time vocab from July — now he can say when each class is","'Me gustan' (plural) vs 'me gusta' (singular) — drill this distinction"]},wed:{review:["las matemáticas","las ciencias","el arte","la música","la educación física"],vocab:[{es:"el libro",pr:"el LEE-broh",en:"book"},{es:"el cuaderno",pr:"el kwah-DEHR-noh",en:"notebook"},{es:"el lápiz",pr:"el LAH-pees",en:"pencil"},{es:"la mochila",pr:"lah moh-CHEE-lah",en:"backpack"},{es:"el maestro / la maestra",pr:"el mah-EHS-troh",en:"teacher (m/f)"},],grammar:{title:"Classroom Commands & Phrases",rule:"Learn key phrases for the classroom that he can actually use with you during sessions.",examples:[{es:"Abre el libro en la página _.",en:"Open the book to page ___."},{es:"No entiendo. ¿Puede repetir?",en:"I don't understand. Can you repeat?"},{es:"¿Cómo se dice ___ en español?",en:"How do you say ___ in Spanish?"},],tip:"🎯 These classroom phrases are REAL LIFE — use them in every session going forward!"},activities:[{emoji:"🎒",title:"Backpack Inventory",desc:"Empty a backpack. Name each item in Spanish as it comes out. Bonus: say which class it's used for."},{emoji:"🗣️",title:"Classroom Phrase Drill",desc:"Practice the classroom phrases by acting them out. Make them habitual during sessions."},],challenge:{title:"🏆 Week 1 Wrap-Up",desc:"Pretend you're a student giving a Spanish tour of your school to a new student. Name and describe 8 places/things.",prompt:'"Aquí está mi salón de clase. Tengo matemáticas aquí a las ocho. Mi maestra es muy simpática..."'},notes:["The classroom phrases are gold — start using '¿Cómo se dice?' in every session","Back-to-school energy is real in August — lean into it","Backpack activity is hands-on and quick — great for a warm-up transition"]},ind:{video:{id:"5B0CWRBqFKM",title:"School Subjects in Spanish",channel:"Calico Spanish"},workbook:{title:"Week 1 — De regreso a la escuela",instruction:"Fill in the blanks with the correct school subject or classroom item.",items:[{label:"1. You use numbers and equations in: las ___",answer:"matemáticas",blank:true},{label:"2. You learn about the past in: la ___",answer:"historia",blank:true},{label:"3. You carry your books in: la ___",answer:"mochila",blank:true},{label:"4. 'I like art': Me gusta el ___",answer:"arte",blank:true},{label:"5. 'How do you say ___ in Spanish?': ¿Cómo ___ dice?",answer:"se",blank:true},],bank:["matemáticas","historia","mochila","arte","se","ciencias","lápiz"]}}},...Array(3).fill(null).map((_,i)=>({mon:{vocab:[{es:"fácil",pr:"FAH-seel",en:"easy"},{es:"difícil",pr:"dee-FEE-seel",en:"difficult"},{es:"interesante",pr:"een-teh-reh-SAHN-teh",en:"interesting"},{es:"aburrido/a",pr:"ah-boo-RREE-doh",en:"boring"},{es:"importante",pr:"eem-pohr-TAHN-teh",en:"important"},{es:"el examen",pr:"el ehk-SAH-mehn",en:"test / exam"},{es:"la tarea",pr:"lah tah-REH-ah",en:"homework"},{es:"sacar una buena nota",pr:"sah-KAHR",en:"to get a good grade"},{es:"estudiar",pr:"ehs-too-dee-AHR",en:"to study (review)"},{es:"preguntar",pr:"preh-goon-TAHR",en:"to ask a question"},],grammar:{title:["Ser + Adjective for Permanent Qualities","Talking About Grades & Tests","August Month Review"][i],rule:["Use <b>ser</b> for things that are always/permanently true about subjects.","Use 'tengo que' (I have to) + verb for obligations.","Review all August content: subjects, classroom items, adjectives, and obligations."][i],examples:[[{es:"Las matemáticas son difíciles.",en:"Math is difficult."},{es:"El arte es interesante y fácil.",en:"Art is interesting and easy."},{es:"La ciencia es importante.",en:"Science is important."}],[{es:"Tengo que estudiar para el examen.",en:"I have to study for the test."},{es:"Saco una buena nota en español.",en:"I get a good grade in Spanish."},{es:"La tarea es para el martes.",en:"The homework is due Tuesday."}],[{es:"Las matemáticas son difíciles pero importantes.",en:"Math is difficult but important."},{es:"¿A qué hora tienes educación física?",en:"At what time do you have PE?"},{es:"Tengo que hacer la tarea esta noche.",en:"I have to do my homework tonight."}]][i],tip:["💡 Adjective agreement: 'la clase ES interesantE' (singular). 'las clases SON interesantES' (plural)!","📝 'Tengo que' is one of the most useful Spanish structures — use it for any obligation!","🏆 August complete! He can now talk about his entire school life in Spanish — incredible."][i]},activities:[{emoji:"📊",title:["Subject Ranking","Study Plan","August Mega Review"][i],desc:["Rank all school subjects from favorite to least favorite. Write a sentence explaining each rank.","Write a study plan for an imaginary exam week. Use 'tengo que estudiar' + day + time.","Speed quiz: alternate between subjects, classroom items, adjectives, and time phrases from July."][i]},{emoji:"✍️",title:["Opinion Paragraphs","Grade Report Card","School Year Presentation"][i],desc:["Write a 6-sentence paragraph about your favorite subject — what it is, why you like it, when you have it, who your teacher is.","Create a bilingual report card. Give yourself grades and write one comment per subject in Spanish.","2-minute presentation: describe your school, your favorite subjects, your schedule, and your teacher."][i]}],challenge:{title:["🏆 Week "+[2,3,4][i]+" Wrap-Up","🏆 Week 3 Challenge","🏆 August Final Challenge"][i],desc:["Write a paragraph comparing two subjects using 'pero' (but) and 'también' (also).","Role-play a parent-teacher conference in Spanish. Discuss grades, homework, and behavior.","Full oral presentation about your school: 10 sentences covering subjects, times, opinions, and plans."][i],prompt:['"Las matemáticas son difíciles pero importantes. También me gustan las ciencias porque..."','"Buenos días. Su hijo saca buenas notas en español. Pero tiene que estudiar más para..."','"Mi escuela se llama ___. Tengo ___ materias. Mi materia favorita es ___ porque..."'][i]},notes:[["'Ser' for permanent qualities is a KEY grammar milestone — celebrate it","The subject ranking gets real opinions flowing — don't rush it","Connect adjectives to his actual school experience for authenticity"],["'Tengo que' will be used constantly going forward — make it stick","The study plan activity ties July (time/days) perfectly to August","Discuss his actual upcoming tests or homework if possible"],["Month-end celebration!","The parent-teacher conference roleplay is hilarious and effective","Preview September: '¡El próximo mes vamos a hablar de la familia!'"]].flat().slice(0,3)},wed:{review:["fácil","difícil","interesante","el examen","la tarea"],vocab:[{es:"el uniforme",pr:"el oo-nee-FOHR-meh",en:"school uniform"},{es:"el recreo",pr:"el reh-KREH-oh",en:"recess"},{es:"el compañero",pr:"el kohm-pahn-YEH-roh",en:"classmate"},{es:"¡Buena suerte!",pr:"BWEH-nah SWEHR-teh",en:"Good luck!"},{es:"¡Lo hiciste!",pr:"loh ee-SEES-teh",en:"You did it!"},],grammar:{title:["Week "+[2,3,4][i]+" Wed Review","School Conversation Practice","Full August Conversation"][i],rule:["Practice school-topic conversations combining all August vocabulary.","Use 'tener que' in a real conversation about school obligations.","Bring everything together in a natural back-and-forth school conversation."][i],examples:[[{es:"¿Tienes recreo hoy?",en:"Do you have recess today?"},{es:"Sí, a las diez. ¡Me encanta el recreo!",en:"Yes, at ten. I love recess!"},{es:"Mi compañero se llama Marco.",en:"My classmate's name is Marco."}],[{es:"Tengo que entregar la tarea mañana.",en:"I have to turn in my homework tomorrow."},{es:"¡Buena suerte en tu examen!",en:"Good luck on your test!"},{es:"¡Lo hiciste! Sacaste una buena nota.",en:"You did it! You got a good grade."}],[{es:"¿Cómo es tu escuela?",en:"What is your school like?"},{es:"Es grande y tiene muchas clases interesantes.",en:"It's big and it has many interesting classes."},{es:"Mi maestra es muy simpática y justa.",en:"My teacher is very kind and fair."}]][i],tip:["🎒 'El recreo' is universally loved by kids — use it to build excitement in conversation!","🍀 '¡Buena suerte!' and '¡Lo hiciste!' are phrases to use authentically during sessions.","🏆 August done! He can hold a real conversation about his entire school experience in Spanish."][i]},activities:[{emoji:"🎭",title:["School Day Roleplay","Homework Help Skit","August Celebration"][i],desc:["Act out a full school day from morning arrival to dismissal, narrating each part in Spanish.","Roleplay: student forgot homework and has to explain to teacher in Spanish why they need an extension.","Play any review game from July or August. His choice. Celebrate the month with a perfect score attempt!"][i]},{emoji:"📝",title:["Classmate Introduction","Test Preparation Guide","Month Vocab Challenge"][i],desc:["Write an introduction of a real or imaginary classmate using physical descriptions (June) + personality words.","Write 5 'tengo que' sentences about preparing for an imaginary big exam next week.","Write 2 sentences for each week of August using that week's key vocabulary."][i]}],challenge:{title:"🏆 Wed Week "+[2,3,4][i]+" Challenge",desc:["Compare two school subjects in a 6-sentence paragraph.","Role-play a parent calling the school to check on homework assignments.","Give a 90-second oral presentation about your ideal school — design it, name the subjects, describe the teachers."][i],prompt:['"Me gustan las ciencias pero no me gustan las matemáticas porque..."','"Buenos días. Quiero saber si mi hijo tiene tarea en matemáticas esta semana..."','"Mi escuela ideal tiene clases de arte todos los días y el recreo dura una hora..."'][i]},notes:[["Quick review of Monday before Wednesday additions","School roleplay keeps engagement high and builds real fluency","The classmate introduction is great cross-unit practice"],["'Olvidé mi tarea' (I forgot my homework) is a phrase kids LOVE learning","The real-life context of homework and tests is highly motivating","Connect to September preview — family unit coming up next"],["Month-end!","Let him choose the review game — giving control boosts buy-in","Preview September with excitement: '¡Vamos a hablar de tu familia!'"]].flat().slice(0,3)},ind:{video:{id:["5B0CWRBqFKM","PXvGbjXAkGM","_BFZK7UPXig"][i],title:["Adjectives in Spanish","Study Tips in Spanish","August Review Game"][i],channel:["Butterfly Spanish","Butterfly Spanish","Calico Spanish"][i]},workbook:{title:["Week "+(i+2)+" — Describing School","Week 3 — Homework & Exams","Week 4 — My School Life"][i],instruction:"Fill in the blanks to complete each sentence about school.",items:[{label:"1. Math is difficult: Las matemáticas son ___",answer:"difíciles",blank:true},{label:"2. 'I have to study': Yo tengo ___ estudiar",answer:"que",blank:true},{label:"3. The homework is due Tuesday: La ___ es para el martes",answer:"tarea",blank:true},{label:"4. 'Good luck!': ¡___ suerte!",answer:"Buena",blank:true},{label:"5. My favorite subject is: Mi materia ___ es ___",answer:"favorita / (subject)",blank:true}],bank:["difíciles","que","tarea","Buena","favorita","fácil","examen"]}}}))],
+  sep:{label:"Septiembre / September",emoji:"🍎",theme:"Family & Describing People",color:"mh-sep",tags:["👨‍👩‍👧 Family","❤️ Relationships","📏 Descriptions"],weeks:[{mon:{vocab:[{es:"la familia",pr:"lah fah-MEE-lyah",en:"family"},{es:"la madre / mamá",pr:"lah MAH-dreh",en:"mother / mom"},{es:"el padre / papá",pr:"el PAH-dreh",en:"father / dad"},{es:"el hermano",pr:"el ehr-MAH-noh",en:"brother"},{es:"la hermana",pr:"lah ehr-MAH-nah",en:"sister"},{es:"el abuelo",pr:"el ah-BWEH-loh",en:"grandfather"},{es:"la abuela",pr:"lah ah-BWEH-lah",en:"grandmother"},{es:"el tío",pr:"el TEE-oh",en:"uncle"},{es:"la tía",pr:"lah TEE-ah",en:"aunt"},{es:"la madrina",pr:"lah mah-DREE-nah",en:"godmother"},],grammar:{title:"Possessives — mi / tu / su",rule:"<b>Mi</b> = my | <b>Tu</b> = your | <b>Su</b> = his/her. Add -s for plurals: <b>mis / tus / sus</b>",examples:[{es:"Mi mamá es alta y simpática.",en:"My mom is tall and kind."},{es:"Mi madrina me enseña español.",en:"My godmother teaches me Spanish."},{es:"Sus abuelos viven cerca.",en:"His/her grandparents live nearby."},],tip:"❤️ Family vocab is highly personal — use REAL names and REAL descriptions for every activity!"},activities:[{emoji:"🌳",title:"Family Tree",desc:"Draw a full family tree. Label every person's relationship to him in Spanish. Include: parents, grandparents, siblings, aunts/uncles, cousins, and godmother!"},{emoji:"📸",title:"Photo Descriptions",desc:"Use a family photo. Point to each person: '¡Esta es mi ___, se llama ___. Es ___ y tiene ___ años.'"},{emoji:"💌",title:"Family Introduction",desc:"Write an introduction of your family as if writing to a Spanish pen pal. Use mi/tu/su + relationship + adjective."},],challenge:{title:"🌳 Family Tree Presentation",desc:"Present your full family tree to Godmommy. For each person, say their name, relationship, 2 descriptions, and one thing they do.",prompt:'"Esta es mi mamá. Se llama ___. Es alta y simpática. Ella trabaja en..."'},notes:["THIS is the unit where you include yourself — '¡Esta es mi madrina!' moment","Physical descriptions from June tie directly in — he's ready","Use real family photos for maximum engagement and personal connection"]},wed:{review:["la mamá","el papá","los abuelos","el tío","la madrina"],vocab:[{es:"el primo / la prima",pr:"el PREE-moh",en:"cousin (m/f)"},{es:"el amigo / la amiga",pr:"el ah-MEE-goh",en:"friend (m/f)"},{es:"mayor",pr:"mah-YOHR",en:"older / elder"},{es:"menor",pr:"meh-NOHR",en:"younger"},{es:"tiene ___ años",pr:"TYEH-neh AHN-yohs",en:"he/she is ___ years old"},],grammar:{title:"Describing Family Members",rule:"Combine ser + adjective + tener + age to give a full description of any person.",examples:[{es:"Mi primo tiene diez años. Es gracioso.",en:"My cousin is 10 years old. He is funny."},{es:"Mi abuela es mayor pero es muy activa.",en:"My grandmother is older but very active."},{es:"Soy el menor / la menor de la familia.",en:"I am the youngest in the family."},],tip:"🎂 '¿Cuántos años tiene?' (How old is he/she?) — combine with July numbers for full sentences!"},activities:[{emoji:"🕵️",title:"Who Am I?",desc:"Describe a family member without saying their name. Other person guesses: 'Es tu ___!'"},{emoji:"📊",title:"Family Age Chart",desc:"List 5 family members with their names, relationship, and age in Spanish."},],challenge:{title:"🏆 Week 1 Family Challenge",desc:"Write a 10-sentence paragraph introducing your entire family. Use mi/su, ages, physical descriptions, and at least 3 personality adjectives.",prompt:'"Me llamo ___. Mi familia tiene ___ personas. Mi mamá se llama ___. Ella tiene ___ años y es..."'},notes:["mayor/menor are great relational vocab — ask who's the oldest and youngest","'¿Cuántos años tiene tu abuela?' — real curiosity drives real language","End with the paragraph — this is the most personal writing assignment so far"]},ind:{video:{id:"NxUTMhAAEAw",title:"Family Members in Spanish",channel:"Calico Spanish"},workbook:{title:"Week 1 — Mi Familia",instruction:"Fill in the blanks about your own family.",items:[{label:"1. 'My mother' in Spanish: mi ___",answer:"mamá / madre",blank:true},{label:"2. 'My godmother teaches me Spanish': Mi ___ me enseña español.",answer:"madrina",blank:true},{label:"3. Your cousin is a girl: mi ___ (prima or primo?)",answer:"prima",blank:true},{label:"4. 'He is 12 years old': ___ doce años.",answer:"Tiene",blank:true},{label:"5. Write 'my younger brother': mi hermano ___",answer:"menor",blank:true}],bank:["mamá / madre","madrina","prima","Tiene","menor","mayor","tío"]}}},...Array(3).fill(null).map((_,i)=>({mon:{vocab:[{es:"simpático/a",pr:"seem-PAH-tee-koh",en:"nice / friendly"},{es:"gracioso/a",pr:"grah-SYOH-soh",en:"funny"},{es:"inteligente",pr:"een-teh-lee-HEHN-teh",en:"intelligent"},{es:"trabajador/a",pr:"trah-bah-hah-DOHR",en:"hardworking"},{es:"cariñoso/a",pr:"kah-reen-YOH-soh",en:"loving / affectionate"},{es:"serio/a",pr:"SEH-ryoh",en:"serious"},{es:"paciente",pr:"pah-SYEHN-teh",en:"patient"},{es:"valiente",pr:"bah-LYEHN-teh",en:"brave"},{es:"creativo/a",pr:"kreh-ah-TEE-boh",en:"creative"},{es:"generoso/a",pr:"heh-neh-ROH-soh",en:"generous"},],grammar:{title:["Personality Adjectives with Ser","Describing Relationships","September Month Review"][i],rule:["Use <b>ser</b> for permanent personality traits.","Describe how people relate to each other using ser + personality + reason.","Bring together family vocab, possessives, physical descriptions, and personality adjectives."][i],examples:[[{es:"Mi papá es muy trabajador.",en:"My dad is very hardworking."},{es:"Mi abuela es cariñosa y paciente.",en:"My grandma is loving and patient."},{es:"Soy creativo y a veces serio.",en:"I am creative and sometimes serious."}],[{es:"Mi mejor amigo es gracioso y generoso.",en:"My best friend is funny and generous."},{es:"Somos muy diferentes pero somos amigos.",en:"We are very different but we are friends."},{es:"Mi maestra es inteligente y muy paciente.",en:"My teacher is intelligent and very patient."}],[{es:"Mi familia es grande y muy unida.",en:"My family is large and very close."},{es:"Mi madrina es generosa y cariñosa.",en:"My godmother is generous and loving."},{es:"Quiero ser valiente como mi papá.",en:"I want to be brave like my dad."}]][i],tip:["🧠 Personality adjectives must agree in gender: 'Él es simpático / Ella es simpática'","👫 This is a great chance to describe YOU as his godmother — he'll love it!","🏆 September is complete! He can now fully describe any person in Spanish."][i]},activities:[{emoji:"🧠",title:["Personality Sort","Friendship Map","September Mega Review"][i],desc:["Write 5 personality adjectives that describe YOU. Write 5 that describe Godmommy. Compare!","Draw a map with yourself in the center. Connect to 5 people with arrows. Write 2 personality words per person.","Speed round: family vocab, personality adjectives, possessives, and physical descriptions — 2 minutes, max correct."][i]},{emoji:"📝",title:["Character Analysis","Best Friend Essay","Family Album"][i],desc:["Describe a character from a movie or book using only Spanish personality adjectives.","Write a 6-sentence paragraph about your best friend using personality + physical + relationship vocab.","Write 2 sentences about each family member — one physical description (June), one personality (this week)."][i]}],challenge:{title:"🏆 Week "+[2,3,4][i]+" Sep Challenge",desc:["Describe yourself using 8 personality adjectives in full sentences.","Write a 'Best Friend Wanted' poster in Spanish with all the qualities your ideal best friend would have.","Full family album: 8 family members, 3 sentences each — name, physical description, personality."][i],prompt:['"Yo soy ___ y ___. También soy ___ cuando... No soy ___ pero soy muy..."','"Se busca un mejor amigo. Debe ser ___, ___, y ___. Le gusta ___ y..."','"Esta es mi familia. Mi mamá es alta y cariñosa. Mi papá es..."'][i]},notes:[["Gender agreement on adjectives — watch for this carefully","The self-description activity builds real confidence","Character analysis from a movie he loves = high engagement"],["'Mejor amigo' vocabulary is warm and personal","The 'Best Friend Wanted' poster is creative and memorable","Connect physical descriptions from June for full person descriptions"],["Month-end celebration!","The family album is the most personal project so far — make it special","Preview October: 'El mes que viene vamos a aprender sobre las emociones y Halloween!'"]].flat().slice(0,3)},wed:{review:["simpático/a","gracioso/a","inteligente","cariñoso/a","valiente"],vocab:[{es:"¿Cómo es...?",pr:"KOH-moh ehs",en:"What is ___ like?"},{es:"Se parece a...",pr:"seh pah-REH-seh ah",en:"He/she looks like..."},{es:"Se lleva bien con",pr:"seh YEH-bah byehn kohn",en:"Gets along well with"},{es:"el mejor amigo",pr:"el meh-HOHR ah-MEE-goh",en:"best friend"},{es:"la familia unida",pr:"lah fah-MEE-lyah oo-NEE-dah",en:"close-knit family"},],grammar:{title:["Week "+(i+2)+" Wed Review","Comparing Family Members","September Full Review"][i],rule:["Practice describing people with a full set of vocabulary.","Use 'más... que' (more... than) to compare family members.","Full conversation combining all September vocabulary naturally."][i],examples:[[{es:"¿Cómo es tu mamá?",en:"What is your mom like?"},{es:"Es alta, tiene el pelo largo, y es muy cariñosa.",en:"She is tall, has long hair, and is very loving."},{es:"Se parece a mi abuela.",en:"She looks like my grandmother."}],[{es:"Mi papá es más alto que mi tío.",en:"My dad is taller than my uncle."},{es:"Mi hermana es más joven que yo.",en:"My sister is younger than me."},{es:"¿Quién es más gracioso, tú o tu primo?",en:"Who is funnier, you or your cousin?"}],[{es:"Mi familia es muy unida.",en:"My family is very close."},{es:"Nos llevamos bien.",en:"We get along well."},{es:"Me encanta pasar tiempo con mi familia.",en:"I love spending time with my family."}]][i],tip:["🪞 'Se parece a' is a beautiful, natural-sounding phrase — use it!","⚖️ Comparisons with 'más... que' come up constantly — this is great prep for later","❤️ End September with something warm — family is the heart of this unit."][i]},activities:[{emoji:"🎭",title:["Guess the Person","Family Comparison Game","September Celebration"][i],desc:["Describe a family member using only personality and physical traits. Other person guesses who it is.","Compare pairs of family members: 'Papá es más ___ que tío ___.' Do 5 comparisons.","Play the family description game but set a timer — 30 seconds to describe a person in Spanish!"][i]},{emoji:"📝",title:["People Bingo","Comparison Chart","Month Memory Challenge"][i],desc:["Create a Bingo card with personality adjectives. Call out descriptions of real people — mark it if it matches!","Make a comparison chart: 5 family pairs, with 'más... que' sentences for each.","Write a sentence for each week of September that captures the most important thing learned."][i]}],challenge:{title:"🏆 Wed Week "+[2,3,4][i]+" Family Challenge",desc:["Oral description: describe 3 people from your life in 2 minutes using all descriptive vocab.","Write 5 comparison sentences about family members using 'más... que.'","Full family portrait: oral presentation of 6 family members, 3 sentences each, in under 3 minutes."][i],prompt:['"Mi ___ es ___ y ___. Tiene el pelo ___ y los ojos ___. Se parece a..."','"Mi papá es más alto que mi tío. Mi abuela es más mayor que..."','"Esta es mi familia. Mi mamá se llama ___ y es muy ___. Mi papá es más ___ que..."'][i]},notes:[["'Se parece a' generates real engagement — who does he look like?","Guess the Person is a crowd-pleaser — slow it down so he really has to think","Month preview after this session"],["Comparisons are linguistically rich — celebrate any attempt","The comparison chart creates a visual reference he can keep","Quick time-telling warm-up from July — keep those skills sharp"],["September complete!","The final family presentation is genuinely moving — be enthusiastic","Preview October with excitement about Halloween and Day of the Dead!"]].flat().slice(0,3)},ind:{video:{id:["NxUTMhAAEAw","9CL6itZbFnk","EvTmNT_GLQY"][i],title:["Personality Words in Spanish","Describe People in Spanish","Family and Adjectives Review"][i],channel:["Calico Spanish","Butterfly Spanish","Calico Spanish"][i]},workbook:{title:["Week "+(i+2)+" — Describing Personalities","Week 3 — My Best Friend","Week 4 — My Family Album"][i],instruction:"Write complete sentences describing people using personality adjectives.",items:[{label:"1. My dad is hardworking: Mi papá es ___",answer:"trabajador",blank:true},{label:"2. My teacher is patient: Mi maestra es ___",answer:"paciente",blank:true},{label:"3. I am creative: Yo soy ___",answer:"creativo/a",blank:true},{label:"4. She looks like her mom: ___ parece a su mamá.",answer:"Se",blank:true},{label:"5. Write 2 words describing your best friend:",answer:"(open answer)",blank:true}],back:["trabajador","paciente","creativo/a","Se","simpático","gracioso","valiente"]}}}))],
+  oct:{label:"Octubre / October",emoji:"🎃",theme:"Emotions & Celebrations",color:"mh-oct",tags:["😊 Emotions","💀 Día de los Muertos","🎃 Halloween"],weeks:Array(4).fill(null).map((_,i)=>({mon:{vocab:[[{es:"las emociones",pr:"lahs eh-moh-SYOH-nehs",en:"emotions"},{es:"feliz",pr:"feh-LEES",en:"happy"},{es:"triste",pr:"TREES-teh",en:"sad"},{es:"enojado/a",pr:"eh-noh-HAH-doh",en:"angry"},{es:"asustado/a",pr:"ah-soos-TAH-doh",en:"scared"},{es:"emocionado/a",pr:"eh-moh-syoh-NAH-doh",en:"excited"},{es:"sorprendido/a",pr:"sohr-prehn-DEE-doh",en:"surprised"},{es:"nervioso/a",pr:"nehr-BYOH-soh",en:"nervous"},{es:"orgulloso/a",pr:"ohr-goo-YOH-soh",en:"proud"},{es:"avergonzado/a",pr:"ah-behr-gohn-SAH-doh",en:"embarrassed"}],[{es:"la fiesta",pr:"lah FYEHS-tah",en:"party / celebration"},{es:"la calavera",pr:"lah kah-lah-BEH-rah",en:"skull"},{es:"el disfraz",pr:"el dees-FRAHS",en:"costume"},{es:"el dulce",pr:"el DOOL-seh",en:"candy / sweet"},{es:"la ofrenda",pr:"lah oh-FREHN-dah",en:"offering / altar"},{es:"la vela",pr:"lah BEH-lah",en:"candle"},{es:"la flor",pr:"lah flohr",en:"flower"},{es:"recordar",pr:"reh-kohr-DAHR",en:"to remember"},{es:"celebrar",pr:"seh-leh-BRAHR",en:"to celebrate"},{es:"la tradición",pr:"lah trah-dee-SYOHN",en:"tradition"}],[{es:"asustar",pr:"ah-soos-TAHR",en:"to scare / frighten"},{es:"disfrazarse",pr:"dees-frah-SAR-seh",en:"to wear a costume"},{es:"pedir dulces",pr:"peh-DEER DOOL-sehs",en:"to trick-or-treat"},{es:"decorar",pr:"deh-koh-RAHR",en:"to decorate"},{es:"¡Qué susto!",pr:"keh SOOS-toh",en:"What a scare!"},{es:"¡Feliz Halloween!",pr:"",en:"Happy Halloween!"},{es:"la calabaza",pr:"lah kah-lah-BAH-sah",en:"pumpkin"},{es:"el fantasma",pr:"el fahn-TAHS-mah",en:"ghost"},{es:"la bruja",pr:"lah BROO-hah",en:"witch"},{es:"el esqueleto",pr:"el ehs-keh-LEH-toh",en:"skeleton"}],[{es:"honrar",pr:"ohn-RAHR",en:"to honor"},{es:"el alma",pr:"el AHL-mah",en:"soul / spirit"},{es:"el cempasúchil",pr:"el sehm-pah-SOO-cheel",en:"marigold"},{es:"la fotografía",pr:"lah foh-toh-grah-FEE-ah",en:"photograph"},{es:"el altar",pr:"el ahl-TAHR",en:"altar"},{es:"la comida favorita",pr:"",en:"favorite food"},{es:"querer",pr:"keh-REHR",en:"to love / want"},{es:"extrañar",pr:"ehks-trahn-YAHR",en:"to miss (someone)"},{es:"el recuerdo",pr:"el reh-KWEHR-doh",en:"memory / souvenir"},{es:"para siempre",pr:"PAH-rah SYEHM-preh",en:"forever"}]][i],grammar:{title:["Estar + Emotions","Día de los Muertos Vocabulary","Halloween Action Verbs","Honoring Those We Love"][i],rule:["Use <b>estoy + emotion</b> for how you feel right now. Remember: emotions are TEMPORARY → use ESTAR.","Use vocabulary to describe and explain the Día de los Muertos celebration.","Practice action verbs in the context of Halloween celebrations.","Use 'querer' and 'extrañar' to talk about people we love and remember."][i],examples:[[{es:"Estoy emocionado por Halloween.",en:"I am excited about Halloween."},{es:"¿Estás nervioso o asustado?",en:"Are you nervous or scared?"},{es:"Ella está orgullosa de su disfraz.",en:"She is proud of her costume."}],[{es:"La ofrenda tiene fotos y flores.",en:"The altar has photos and flowers."},{es:"Recordamos a las personas que amamos.",en:"We remember the people we love."},{es:"El cempasúchil es la flor de Día de Muertos.",en:"The marigold is the flower of Day of the Dead."}],[{es:"Me voy a disfrazar de fantasma.",en:"I'm going to dress up as a ghost."},{es:"Vamos a decorar la casa para Halloween.",en:"We're going to decorate the house for Halloween."},{es:"¡Me asustaste! ¡Qué susto!",en:"You scared me! What a scare!"}],[{es:"Extraño a mi abuelo.",en:"I miss my grandfather."},{es:"Lo recuerdo para siempre.",en:"I remember him forever."},{es:"Le ponemos su comida favorita en el altar.",en:"We put his favorite food on the altar."}]][i],tip:["💡 SER vs ESTAR: 'Soy valiente' (I am brave — always) vs 'Estoy asustado' (I am scared — right now)","🌺 Día de los Muertos is beautiful, not scary! It's about love, memory, and celebrating life.","🎃 Halloween vocab is fun AND useful — he can use it with his friends this October!","❤️ The 'extrañar' lesson can be emotional — be gentle and let him share if he wants to."][i]},activities:[[{emoji:"🎭",title:"Emotion Charades",desc:"Act out an emotion silently. Other person says the full sentence: '¡Estás emocionado!' No peeking at the list."},{emoji:"📅",title:"Emotion Journal",desc:"Write how you felt at 5 different moments this week using 'Estoy/Estaba + emotion + porque.'"},{emoji:"💬",title:"Feeling Check-In",desc:"Daily check-in routine: '¿Cómo estás hoy?' Give a full answer with emotion + reason."}],[{emoji:"🌺",title:"Ofrenda Design",desc:"Design an ofrenda for someone you love. Draw it and label every item in Spanish."},{emoji:"📖",title:"Día de Muertos Story",desc:"Write a short story about a family celebrating Día de Muertos. Use at least 8 vocabulary words."},{emoji:"🎨",title:"Calavera Art",desc:"Create a calavera (decorated skull) design. Label colors and decorations in Spanish."}],[{emoji:"🎃",title:"Halloween Plans",desc:"Write your Halloween plans using 'voy a' + Halloween action verbs. At least 6 sentences."},{emoji:"👻",title:"Scary Story",desc:"Co-write a 8-sentence scary story in Spanish. Take turns adding sentences."},{emoji:"🎨",title:"Costume Description",desc:"Describe your dream Halloween costume in Spanish — what it is, what color, why you chose it."}],[{emoji:"💐",title:"Memory Altar",desc:"Describe an imaginary ofrenda for someone important. List 5 items and why each was chosen."},{emoji:"📝",title:"Letter to Someone Special",desc:"Write a 6-sentence letter to someone you love or miss — living or passed. Use 'te quiero,' 'te extraño,' 'recuerdo...'"}]][i],challenge:{title:"🏆 Oct Week "+(i+1)+" Challenge",desc:["Emotion story: write a story where the main character feels 6 different emotions. Label each with 'estaba/estoy.'","Create a bilingual Día de los Muertos guide for a friend who's never heard of it. Include 5 facts and 5 vocabulary words.","Write a full Halloween plan: costume, activities, time, emotions. At least 8 sentences.","Write a heartfelt tribute to someone you love in Spanish. At least 5 sentences using vocabulary from this week."][i],prompt:['"Al principio, el niño estaba emocionado. Luego, estaba asustado porque..."','"El Día de Muertos es una tradición en México. No es como Halloween porque..."','"Para Halloween, voy a disfrazarme de ___. A las seis de la tarde, voy a pedir dulces con..."','"Extraño a mi ___. Lo/La recuerdo cuando... Le pondría ___ en el altar porque..."'][i]},notes:[[" SER vs ESTAR is THE most important Spanish grammar concept — keep practicing","The emotion charades game works at any energy level","Connect to June's 'estoy cansado/tengo hambre' — he has some emotion vocab already"],["Día de los Muertos often surprises kids positively — many say it's their favorite cultural lesson","The ofrenda design is the richest creative activity of the year","Be prepared for emotional depth — some kids connect this to real loss"],["Halloween is high-energy and motivating — ride it!","The co-written scary story is hilarious and memorable","Costume description is a great vocab + opinion combination"],["The letter activity is the most emotionally rich assignment of the year","Create a safe, warm space for this one — don't rush it","Month-end! October complete. November preview: 'gratitude and future dreams!'"]].flat().slice(0,3)},wed:{review:[["feliz","triste","enojado/a","emocionado/a","orgulloso/a"],["la ofrenda","recordar","celebrar","la tradición","el cempasúchil"],["el disfraz","la calabaza","decorar","¡Qué susto!","pedir dulces"],["extrañar","el alma","el recuerdo","honrar","para siempre"]][i],vocab:[[{es:"¡Qué emoción!",pr:"keh eh-moh-SYOHN",en:"How exciting!"},{es:"me pone feliz",pr:"meh POH-neh feh-LEES",en:"it makes me happy"},{es:"me pone triste",pr:"meh POH-neh TREES-teh",en:"it makes me sad"},{es:"a veces",pr:"ah BEH-sehs",en:"sometimes"},{es:"siempre",pr:"SYEHM-preh",en:"always"}],[{es:"el marigold / la flor",pr:"",en:"marigold / flower"},{es:"el pan de muerto",pr:"el pahn deh MWEHR-toh",en:"bread of the dead"},{es:"las velas",pr:"lahs BEH-lahs",en:"candles (plural)"},{es:"el camino",pr:"el kah-MEE-noh",en:"path / road"},{es:"guiar",pr:"gee-AHR",en:"to guide"}],[{es:"¡Boo! ¡Buu!",pr:"",en:"Boo!"},{es:"dar miedo",pr:"dar MYEH-doh",en:"to be scary / to scare"},{es:"la noche",pr:"lah NOH-cheh",en:"night"},{es:"oscuro/a",pr:"ohs-KOO-roh",en:"dark"},{es:"¡Truco o trato!",pr:"TROO-koh oh TRAH-toh",en:"Trick or treat!"}],[{es:"la memoria",pr:"lah meh-MOH-ryah",en:"memory"},{es:"con amor",pr:"kohn ah-MOHR",en:"with love"},{es:"el legado",pr:"el leh-GAH-doh",en:"legacy"},{es:"vivir en el corazón",pr:"",en:"to live in the heart"},{es:"siempre presente",pr:"",en:"always present"}]][i],grammar:{title:["Week "+(i+1)+" Wed — Emotion Expressions","Día de los Muertos Deep Dive","Halloween Roleplay","October Month Review"][i],rule:["Use 'me pone + emotion' to say what makes you feel a certain way.","Put together a full explanation of Día de los Muertos using all week's vocab.","Full Halloween conversation combining emotions, plans, and celebration vocab.","Bring together all October vocabulary: emotions, celebrations, and cultural content."][i],examples:[[{es:"El español me pone feliz.",en:"Spanish makes me happy."},{es:"A veces, los exámenes me ponen nervioso.",en:"Sometimes, tests make me nervous."},{es:"¡Qué emoción aprender español!",en:"How exciting it is to learn Spanish!"}],[{es:"Las flores guían el camino a casa.",en:"The flowers guide the path home."},{es:"El pan de muerto es dulce y especial.",en:"The bread of the dead is sweet and special."},{es:"Las velas iluminan la ofrenda.",en:"The candles light up the offering altar."}],[{es:"¡Truco o trato! Dame dulces, por favor.",en:"Trick or treat! Give me candy, please."},{es:"Tu disfraz me da miedo. ¡Qué susto!",en:"Your costume scares me. What a fright!"},{es:"La noche de Halloween es oscura pero divertida.",en:"Halloween night is dark but fun."}],[{es:"En octubre, estoy emocionado por Halloween.",en:"In October, I am excited about Halloween."},{es:"El Día de los Muertos es una tradición hermosa.",en:"Day of the Dead is a beautiful tradition."},{es:"Recuerdo a mis seres queridos con amor.",en:"I remember my loved ones with love."}]][i],tip:["🎯 'Me pone feliz' is a beautiful, natural phrase — much better than just 'me gusta'!","🕯️ The candle/flower/path imagery of Día de Muertos is poetic — bring it to life!","👻 The Halloween roleplay is pure fun — let him be dramatic and silly!","🏆 October is the richest cultural month — celebrate the depth of what he's learned!"][i]},activities:[[{emoji:"📝",title:"What Makes Me Feel...",desc:"Write 'Me pone feliz cuando...' and 'Me pone triste cuando...' Complete 5 sentences for each."},{emoji:"🎭",title:"Emotion Sentence Relay",desc:"Alternate saying sentences with 'estoy' and 'me pone.' Keep the flow going for 2 minutes."}],[{emoji:"🎨",title:"Ofrenda Gallery",desc:"Share and compare ofrenda designs from Monday. Add new items using this week's additional vocab."},{emoji:"🗣️",title:"Teach It Back",desc:"Explain Día de los Muertos to an imaginary friend who doesn't know what it is — entirely in Spanish."}],[{emoji:"🎃",title:"Halloween Roleplay",desc:"Full trick-or-treat scenario: knock on doors, say the phrase, react to scary decorations, count candy."},{emoji:"📝",title:"Spooky Sentence Starters",desc:"Complete: 'La noche oscura me ___.' 'El fantasma me ___.' 'Cuando veo una bruja, estoy ___.'"}],[{emoji:"🎮",title:"October Mega Review",desc:"Emotions, cultural vocab, and Halloween vocab — speed quiz. 20 words in 90 seconds."},{emoji:"📝",title:"October Reflection",desc:"Write 4 sentences: one about Halloween, one about Día de Muertos, one about an emotion you felt this month, one about something you'll always remember."}]][i],challenge:{title:"🏆 Oct Wed Week "+(i+1)+" Challenge",desc:["Write 8 sentences using 'me pone' + emotion about real things in your life.","Give a 90-second oral explanation of Día de los Muertos to Godmommy — pretend she's never heard of it!","Full Halloween conversation roleplay: you're trick-or-treating, something scary happens, you react!","October wrap-up: write one paragraph covering Halloween, Día de los Muertos, and your favorite emotion word learned this month."][i],prompt:['"El fútbol me pone emocionado. Las matemáticas a veces me ponen nervioso. Mi familia me pone..."','"El Día de los Muertos es el primero y segundo de noviembre. Las familias construyen una ofrenda porque..."','"¡Truco o trato! ¿Qué es ese ruido? ¡Me asustaste! ¡Qué susto! Estoy muy asustado pero también..."','"En octubre, aprendí sobre las emociones y las celebraciones. Halloween me pone emocionado porque..."'][i]},notes:[[" 'Me pone' is a major natural language upgrade from 'me gusta' — use it constantly","Emotion expressions in context beat lists every time","Quick SER vs ESTAR review before starting"],["The 'teach it back' activity is the ultimate comprehension check","His ofrenda design should be displayed or saved — it's special","Día de los Muertos is often the favorite lesson of the whole year"],["Halloween energy is at maximum — use it!","The spooky sentence starters generate great creative language","Month almost complete — preview November warmly"],["October is the richest month — he's learned SO much","The month reflection is a beautiful culminating activity","November preview: gratitude, future dreams, and giving thanks!"]].flat().slice(0,3)},ind:{video:[{id:"Bz3BfwgPXwk",title:"Emotions in Spanish for Kids",channel:"Rockalingua"},{id:"mMFBzBQX7xg",title:"Día de los Muertos for Kids",channel:"Calico Spanish"},{id:"0-IKnHrEMSE",title:"Halloween Spanish Vocabulary",channel:"123 Andrés"},{id:"TronF-_RVHE",title:"Day of the Dead Traditions",channel:"Butterfly Spanish"}][i],workbook:{title:["Week 1 — ¿Cómo te sientes?","Week 2 — Día de los Muertos","Week 3 — ¡Feliz Halloween!","Week 4 — October Review"][i],instruction:"Fill in the blanks using this week's vocabulary.",items:[{label:"1. 'I am excited': Yo ___ emocionado.",answer:"estoy",blank:true},{label:"2. 'It makes me happy': Me ___ feliz.",answer:"pone",blank:true},{label:"3. The Day of the Dead flower: el ___",answer:"cempasúchil",blank:true},{label:"4. 'Trick or treat!' in Spanish: ¡___ o ___!",answer:"Truco / trato",blank:true},{label:"5. 'I miss my grandfather': ___ a mi abuelo.",answer:"Extraño",blank:true}],back:["estoy","pone","cempasúchil","Truco / trato","Extraño","orgulloso","disfraz"]}}}))],
+  nov:{label:"Noviembre / November",emoji:"🦃",theme:"Gratitude & Future Dreams",color:"mh-nov",tags:["🙏 Gratitude","🔮 Future","💭 Dreams"],weeks:Array(4).fill(null).map((_,i)=>({mon:{vocab:[[{es:"gracias",pr:"GRAH-syahs",en:"thank you"},{es:"estoy agradecido/a",pr:"ehs-TOY ah-grah-deh-SEE-doh",en:"I am grateful"},{es:"quiero",pr:"KYEH-roh",en:"I want"},{es:"quiero ser",pr:"KYEH-roh sehr",en:"I want to be"},{es:"quiero ir",pr:"KYEH-roh eer",en:"I want to go"},{es:"el sueño",pr:"el SWEH-nyoh",en:"dream"},{es:"el futuro",pr:"el foo-TOO-roh",en:"the future"},{es:"algún día",pr:"ahl-GOON DEE-ah",en:"someday"},{es:"la esperanza",pr:"lah ehs-peh-RAHN-sah",en:"hope"},{es:"aprender",pr:"ah-prehn-DEHR",en:"to learn"}],[{es:"ayudar",pr:"ah-yoo-DAHR",en:"to help"},{es:"compartir",pr:"kohm-pahr-TEER",en:"to share"},{es:"la bondad",pr:"lah bohn-DAHD",en:"kindness"},{es:"la gratitud",pr:"lah grah-tee-TOOD",en:"gratitude"},{es:"dar las gracias",pr:"dahr lahs GRAH-syahs",en:"to give thanks"},{es:"porque",pr:"POR-keh",en:"because"},{es:"importante",pr:"eem-pohr-TAHN-teh",en:"important"},{es:"la familia importa",pr:"",en:"family matters"},{es:"el corazón",pr:"el koh-rah-SOHN",en:"heart"},{es:"con todo mi corazón",pr:"",en:"with all my heart"}],[{es:"crecer",pr:"kreh-SEHR",en:"to grow"},{es:"el año que viene",pr:"el AHN-yoh keh BYEH-neh",en:"next year"},{es:"voy a ser",pr:"BOY ah sehr",en:"I am going to be"},{es:"voy a aprender",pr:"BOY ah ah-prehn-DEHR",en:"I am going to learn"},{es:"voy a ayudar",pr:"BOY ah ah-yoo-DAHR",en:"I am going to help"},{es:"cuando sea mayor",pr:"KWAHN-doh SEH-ah mah-YOHR",en:"when I grow up"},{es:"el trabajo",pr:"el trah-BAH-hoh",en:"work / job"},{es:"el éxito",pr:"el EHK-see-toh",en:"success"},{es:"esforzarse",pr:"ehs-fohr-SAR-seh",en:"to work hard / strive"},{es:"el logro",pr:"el LOH-groh",en:"achievement / accomplishment"}],[{es:"el año pasado",pr:"el AHN-yoh pah-SAH-doh",en:"last year"},{es:"este año",pr:"EHS-teh AHN-yoh",en:"this year"},{es:"el año que viene",pr:"",en:"next year"},{es:"aprendí",pr:"ah-prehn-DEE",en:"I learned"},{es:"mejoré",pr:"meh-hoh-REH",en:"I improved"},{es:"logré",pr:"loh-GREH",en:"I achieved"},{es:"estoy orgulloso/a",pr:"",en:"I am proud"},{es:"quiero mejorar",pr:"",en:"I want to improve"},{es:"¡Lo hiciste!",pr:"loh ee-SEES-teh",en:"You did it!"},{es:"¡Felicidades!",pr:"feh-lee-see-DAH-dehs",en:"Congratulations!"}]][i],grammar:{title:["Gratitude — Estoy agradecido/a por...","Kindness & Values in Spanish","Future with 'Voy a'","Year in Review — Past Tense Intro"][i],rule:["Use <b>estoy agradecido/a por + noun</b> OR <b>estoy agradecido/a de + infinitive</b>.","Use 'dar las gracias' and 'ayudar' to talk about showing kindness.","Use <b>voy a + infinitive</b> to express future intentions and goals.","Introduce past tense lightly: 'aprendí' (I learned), 'mejoré' (I improved)."][i],examples:[[{es:"Estoy agradecido por mi familia.",en:"I am grateful for my family."},{es:"Gracias por enseñarme español.",en:"Thank you for teaching me Spanish."},{es:"Estoy agradecido de aprender cosas nuevas.",en:"I am grateful to learn new things."}],[{es:"Me gusta ayudar a los demás.",en:"I like to help others."},{es:"Compartir es muy importante.",en:"Sharing is very important."},{es:"Mi maestra tiene un gran corazón.",en:"My teacher has a big heart."}],[{es:"El año que viene, voy a aprender más español.",en:"Next year, I'm going to learn more Spanish."},{es:"Cuando sea mayor, voy a ser doctor.",en:"When I grow up, I'm going to be a doctor."},{es:"Voy a esforzarme más en las matemáticas.",en:"I'm going to work harder in math."}],[{es:"Este año, aprendí mucho español.",en:"This year, I learned a lot of Spanish."},{es:"¡Logré hablar en español! ¡Felicidades!",en:"I achieved speaking Spanish! Congratulations!"},{es:"El año que viene, quiero mejorar más.",en:"Next year, I want to improve more."}]][i],tip:["🙏 Gratitude vocabulary is deeply personal — take time with it. Don't rush!","❤️ Values conversations in Spanish build both language AND character!","🔮 'Voy a' future is one of the MOST USEFUL structures he'll ever learn.","🏆 Introducing the past tense lightly here sets up future learning beautifully."][i]},activities:[[{emoji:"🙏",title:"Gratitude List",desc:"Write 10 things you're grateful for in Spanish. Start each: 'Estoy agradecido/a por/de...'"},{emoji:"💌",title:"Thank You Letter",desc:"Write a sincere thank-you letter in Spanish to someone important. Use 'gracias por,' 'estoy agradecido/a,' and 'me ayudas cuando...'"},{emoji:"🗣️",title:"Gratitude Sharing Circle",desc:"Take turns sharing one thing you're grateful for. Listen, respond: '¡Qué hermoso!' or '¡Me alegra mucho!'"}],[{emoji:"❤️",title:"Kindness Map",desc:"Draw a map of your week. Mark every moment you showed kindness. Write what you did in Spanish."},{emoji:"📝",title:"Values Paragraph",desc:"Write a 6-sentence paragraph about the most important value in your life. Use 'creo que...' (I believe that...)"},{emoji:"🎭",title:"Kindness Skits",desc:"Act out 3 scenes where someone shows kindness. Narrate in Spanish: 'Él/ella ayuda porque...'"}],[{emoji:"🔮",title:"Dream Board",desc:"Write 5 future goals: 'Voy a ser ___. Voy a aprender ___. Cuando sea mayor, voy a...' Illustrate each one."},{emoji:"📝",title:"Letter to Future Self",desc:"Write a letter to yourself 10 years from now. Tell your future self your dreams in Spanish."},{emoji:"🗣️",title:"Career Day",desc:"'When I grow up...' conversation. Each person describes 3 dream careers using 'Quiero ser' and 'Voy a'"}],[{emoji:"🏆",title:"Year in Review",desc:"Look back at all the months. Write one sentence about what you learned each month: 'En mayo, aprendí...'"},{emoji:"🎉",title:"Achievement Celebration",desc:"Make a list of 10 Spanish things you can now do. Start each: 'Ahora puedo...' (Now I can...)"},{emoji:"📝",title:"November Reflection",desc:"Write a paragraph: what you're grateful for this year, one dream for next year, and one thing you'll always remember."}]][i],challenge:{title:"🏆 Nov Week "+(i+1)+" Challenge",desc:["Write a 10-item gratitude list and read it aloud. Then write a 4-sentence thank-you letter to one person.","Write your personal 'Values Statement' in Spanish — 6 sentences about what matters most to you.","Create a full 'Future Dreams' vision: 5 goals using 'voy a,' 3 career ideas using 'quiero ser,' and 1 big dream for 'cuando sea mayor.'","Year-in-review oral presentation: 2 minutes covering something learned each month, your proudest moment, and your goal for next year."][i],prompt:['"Estoy agradecido/a por ___, ___, y ___. Gracias a mi madrina por enseñarme español con amor..."','"Creo que la bondad es muy importante porque... Yo trato de ayudar cuando... Mi valor más importante es..."','"Voy a ser ___. Voy a aprender ___. Cuando sea mayor, voy a ayudar a ___. Mi sueño más grande es..."','"Este año, aprendí sobre los lugares, el cuerpo, la familia, y mucho más. Estoy orgulloso/a porque... El año que viene, quiero..."'][i]},notes:[[" Gratitude is a powerful emotional anchor — give it real space","The thank-you letter to Godmommy is a potential keepsake","This is a great month for deep, slow conversations in Spanish"],["Values conversations are rare in language learning — they're gold","'Creo que' (I believe that) is a sophisticated structure — introduce it gently","Character building alongside language building = the best teaching"],["Future tense via 'voy a' is immediately empowering","The letter to future self is one of the most meaningful activities of the year","Career dreams are always highly motivating for this age"],["Year-in-review is emotional and powerful","The 'Ahora puedo' list shows real concrete progress — be specific","Final month of Year 1 almost here! Build excitement for December!"]].flat().slice(0,3)},wed:{review:[["gracias","estoy agradecido/a","el sueño","quiero","la esperanza"],["ayudar","compartir","la bondad","porque","el corazón"],["voy a ser","cuando sea mayor","el éxito","crecer","el logro"],["aprendí","mejoré","logré","¡Felicidades!","estoy orgulloso/a"]][i],vocab:[[{es:"¡De nada!",pr:"deh NAH-dah",en:"You're welcome!"},{es:"por favor",pr:"por fah-BOHR",en:"please"},{es:"¡Con mucho gusto!",pr:"kohn MOO-choh GOOS-toh",en:"With pleasure!"},{es:"¡Qué amable!",pr:"keh ah-MAH-bleh",en:"How kind!"},{es:"la gentileza",pr:"lah hehn-tee-LEH-sah",en:"kindness / gentleness"}],[{es:"todos los días",pr:"TOH-dohs lohs DEE-ahs",en:"every day"},{es:"en mi comunidad",pr:"ehn mee koh-moo-nee-DAHD",en:"in my community"},{es:"hacer el bien",pr:"ah-SEHR el byehn",en:"to do good"},{es:"un acto de bondad",pr:"",en:"an act of kindness"},{es:"servir",pr:"sehr-BEER",en:"to serve"}],[{es:"el próximo año",pr:"el PROHK-see-moh AHN-yoh",en:"next year"},{es:"me comprometo",pr:"meh kohm-proh-MEH-toh",en:"I commit to / I promise"},{es:"paso a paso",pr:"PAH-soh ah PAH-soh",en:"step by step"},{es:"nunca me rindo",pr:"NOON-kah meh REEN-doh",en:"I never give up"},{es:"el camino",pr:"el kah-MEE-noh",en:"the journey / path"}],[{es:"¡Buen trabajo!",pr:"bwehn trah-BAH-hoh",en:"Good work!"},{es:"¡Estoy orgulloso/a de ti!",pr:"",en:"I am proud of you!"},{es:"sigue adelante",pr:"SEE-geh ah-deh-LAHN-teh",en:"keep going / move forward"},{es:"el esfuerzo",pr:"el ehs-FWEHR-soh",en:"effort"},{es:"¡Tú puedes!",pr:"too PWEH-dehs",en:"You can do it!"}]][i],grammar:{title:["Week "+(i+1)+" Wed — Courtesy & Thanks","Service & Community Phrases","Making Commitments","Encouragement Phrases"][i],rule:["Practice a full conversation of gratitude and courtesy.","Talk about helping and serving your community using 'servir' and 'hacer el bien.'","Use 'me comprometo a' to make real future commitments.","Use encouraging phrases to support each other in Spanish."][i],examples:[[{es:"¡Gracias por tu ayuda! ¡Con mucho gusto!",en:"Thank you for your help! With pleasure!"},{es:"¡Qué amable eres siempre!",en:"How kind you always are!"},{es:"Por favor, ¿puedes ayudarme?",en:"Please, can you help me?"}],[{es:"Todos los días, trato de hacer el bien.",en:"Every day, I try to do good."},{es:"En mi comunidad, me gusta servir.",en:"In my community, I like to serve."},{es:"Un acto de bondad cambia el día.",en:"An act of kindness changes the day."}],[{es:"Me comprometo a estudiar más este año.",en:"I commit to studying more this year."},{es:"Paso a paso, voy a mejorar mi español.",en:"Step by step, I'm going to improve my Spanish."},{es:"Nunca me rindo. ¡Tú puedes!",en:"I never give up. You can do it!"}],[{es:"¡Buen trabajo hoy! Estoy orgullosa de ti.",en:"Good work today! I am proud of you."},{es:"Sigue adelante — estás mejorando mucho.",en:"Keep going — you are improving a lot."},{es:"El esfuerzo que pones es increíble.",en:"The effort you put in is incredible."}]][i],tip:["😊 Courtesy phrases make language BEAUTIFUL — they show cultural depth beyond just vocabulary!","🌍 Community and service language is advanced for 10 — be proud of how far he's come!","💪 Making commitments in Spanish connects language to character and real life!","🌟 End every November session with encouragement phrases — mean every word of it!"][i]},activities:[[{emoji:"🤝",title:"Courtesy Conversation",desc:"Full Q&A exchange using only courtesy phrases: gracias, de nada, con mucho gusto, por favor, ¡qué amable!"},{emoji:"📝",title:"Thank You Card Collection",desc:"Write 3 thank-you cards in Spanish — one to a family member, one to a teacher, one to a friend."}],[{emoji:"🌍",title:"Community Helper Presentation",desc:"Name 5 community helpers (el médico, el bombero, etc.). Write 2 sentences about what each one does to help."},{emoji:"💌",title:"Act of Kindness Report",desc:"Report on an act of kindness from this week: who, what, where, when, and why — all in Spanish."}],[{emoji:"📜",title:"My Spanish Commitments",desc:"Write 5 'me comprometo a' sentences — real promises you're making to yourself for next year."},{emoji:"🎯",title:"Step by Step Goal Plan",desc:"Choose one goal. Break it into 5 steps. Write each step in Spanish using 'voy a' + action verb."}],[{emoji:"🏅",title:"Certificate of Achievement",desc:"Design a Spanish certificate for yourself listing your 5 greatest Spanish achievements of the year."},{emoji:"🎤",title:"Encouragement Exchange",desc:"Take turns giving each other specific, sincere encouragement in Spanish using all this week's phrases."}]][i],challenge:{title:"🏆 Nov Wed Week "+(i+1)+" Challenge",desc:["Full courtesy conversation: 8+ exchanges using every politeness phrase from this week.","Write a community service plan in Spanish: what you'll do, who you'll help, when, and why.","Read your commitments aloud with conviction. Add 3 reasons (porque) for why each commitment matters.","Write a letter to Godmommy in Spanish: thank her for the year, share your proudest moment, and name one goal for next year."][i],prompt:['"Gracias, madrina. ¡Con mucho gusto! ¿Puedo ayudarte? ¡Qué amable eres!..."','"En mi comunidad, voy a servir en la biblioteca todos los sábados porque..."','"Me comprometo a estudiar español todos los días porque quiero hablar con fluidez. Paso a paso..."','"Querida madrina, gracias por enseñarme español este año. Aprendí mucho. Estoy orgulloso/a de..."'][i]},notes:[[" Courtesy phrases are often skipped in language learning but are deeply impactful","The thank-you cards are a beautiful take-home keepsake","Keep these sessions warm and personal — November is about connection"],["Community helper vocabulary is great for expanding his world view","The act of kindness report bridges real life to language","This session can be short on vocab and long on conversation — that's perfect"],["Personal commitments in a second language carry real weight","'Nunca me rindo' is a phrase that should become his Spanish motto","This session is about believing in himself — let that be the lesson"],["This is the penultimate session of Year 1 — acknowledge it!","The letter to Godmommy might be the most meaningful thing he writes all year","Give him time to share it. Don't rush. This is the moment."]].flat().slice(0,3)},ind:{video:[{id:"EvTmNT_GLQY",title:"Gratitude in Spanish",channel:"Butterfly Spanish"},{id:"mMFBzBQX7xg",title:"Helping and Kindness in Spanish",channel:"Calico Spanish"},{id:"8TJdBdMphlA",title:"Future Tense in Spanish for Kids",channel:"Rockalingua"},{id:"yONHJ6M0UZc",title:"Year Review in Spanish",channel:"Calico Spanish"}][i],workbook:{title:["Week 1 — Gratitud","Week 2 — Bondad y Comunidad","Week 3 — Mis Sueños","Week 4 — Mi Año en Español"][i],instruction:"Complete each sentence about gratitude, kindness, and your future.",items:[{label:"1. 'I am grateful for my family': Estoy ___ por mi familia.",answer:"agradecido/a",blank:true},{label:"2. 'I want to be a doctor someday': Quiero ser ___ algún día.",answer:"doctor/a",blank:true},{label:"3. 'Next year, I am going to learn more': El año que viene, ___ a aprender más.",answer:"voy",blank:true},{label:"4. 'You can do it!' in Spanish: ¡Tú ___!",answer:"puedes",blank:true},{label:"5. Write something you are grateful for in Spanish:",answer:"(open answer)",blank:true}],bank:["agradecido/a","doctor/a","voy","puedes","gracias","sueño","futuro"]}}}))],
+  dec:{label:"Diciembre / December",emoji:"🎄",theme:"Christmas, Las Posadas & Year 1 Celebration",color:"mh-dec",tags:["🎄 Christmas","🕯️ Las Posadas","🏆 Year 1 Complete"],weeks:Array(4).fill(null).map((_,i)=>({mon:{vocab:[[{es:"la Navidad",pr:"lah nah-bee-DAHD",en:"Christmas"},{es:"¡Feliz Navidad!",pr:"feh-LEES nah-bee-DAHD",en:"Merry Christmas!"},{es:"el árbol de Navidad",pr:"el AHR-bol",en:"Christmas tree"},{es:"el regalo",pr:"el reh-GAH-loh",en:"gift / present"},{es:"las luces",pr:"lahs LOO-sehs",en:"lights"},{es:"la piñata",pr:"lah peen-YAH-tah",en:"piñata"},{es:"el villancico",pr:"el bee-yahn-SEE-koh",en:"Christmas carol"},{es:"la cena navideña",pr:"lah SEH-nah",en:"Christmas dinner"},{es:"decorar",pr:"deh-koh-RAHR",en:"to decorate"},{es:"abrir regalos",pr:"ah-BREER reh-GAH-lohs",en:"to open gifts"}],[{es:"las posadas",pr:"lahs poh-SAH-dahs",en:"Las Posadas"},{es:"peregrinos",pr:"peh-reh-GREE-nohs",en:"pilgrims (Mary & Joseph)"},{es:"la posada",pr:"lah poh-SAH-dah",en:"inn / lodging"},{es:"la vela",pr:"lah BEH-lah",en:"candle"},{es:"el aguinaldo",pr:"el ah-ghee-NAHL-doh",en:"Christmas gift / treat bag"},{es:"cantar",pr:"kahn-TAHR",en:"to sing (review)"},{es:"pedir posada",pr:"peh-DEER poh-SAH-dah",en:"to ask for shelter"},{es:"la procesión",pr:"lah proh-seh-SYOHN",en:"procession"},{es:"nueve noches",pr:"NWEH-beh NOH-chehs",en:"nine nights"},{es:"juntos",pr:"HOON-tohs",en:"together"}],[{es:"los Reyes Magos",pr:"lohs REH-yehs MAH-gohs",en:"Three Kings / Wise Men"},{es:"el seis de enero",pr:"el says deh eh-NEH-roh",en:"January 6th (Three Kings Day)"},{es:"dejar los zapatos",pr:"deh-HAHR lohs sah-PAH-tohs",en:"to leave out your shoes"},{es:"la Rosca de Reyes",pr:"lah ROHS-kah",en:"Three Kings bread"},{es:"el año nuevo",pr:"el AHN-yoh NWEH-boh",en:"new year"},{es:"¡Próspero Año Nuevo!",pr:"PROHS-peh-roh",en:"Happy New Year!"},{es:"los fuegos artificiales",pr:"lohs FWEH-gohs",en:"fireworks"},{es:"el brindis",pr:"el BREEN-dees",en:"toast / cheers"},{es:"la medianoche",pr:"lah meh-dyah-NOH-cheh",en:"midnight (review)"},{es:"con amor",pr:"kohn ah-MOHR",en:"with love"}],[{es:"el año pasado",pr:"",en:"last year"},{es:"este año",pr:"",en:"this year"},{es:"aprendí",pr:"ah-prehn-DEE",en:"I learned"},{es:"pude hablar",pr:"POO-deh ah-BLAHR",en:"I was able to speak"},{es:"mejoré",pr:"meh-hoh-REH",en:"I improved"},{es:"¡Lo logré!",pr:"loh loh-GREH",en:"I did it! I achieved it!"},{es:"estoy listo/a para",pr:"ehs-TOY LEES-toh",en:"I am ready for"},{es:"el próximo nivel",pr:"el PROHK-see-moh nee-BEHL",en:"the next level"},{es:"¡Felicidades!",pr:"feh-lee-see-DAH-dehs",en:"Congratulations!"},{es:"¡Hasta el año que viene!",pr:"AHS-tah el AHN-yoh",en:"Until next year!"}]][i],grammar:{title:["Christmas Vocabulary & 'Vamos a'","Las Posadas Story","Three Kings Day & New Year","Year 1 Review — All Structures"][i],rule:["Use <b>vamos a + infinitive</b> for 'we are going to...' — the plural form of 'voy a.'","Tell the Las Posadas story using sequence words: primero, luego, después, finalmente.","Celebrate the new year with greetings, wishes, and future-tense sentences.","Full review of every major grammar structure from the year."][i],examples:[[{es:"Vamos a decorar el árbol de Navidad.",en:"We are going to decorate the Christmas tree."},{es:"Vamos a cantar villancicos juntos.",en:"We are going to sing Christmas carols together."},{es:"¿Qué regalos quieres para Navidad?",en:"What gifts do you want for Christmas?"}],[{es:"Primero, los peregrinos piden posada.",en:"First, the pilgrims ask for shelter."},{es:"Luego, todos cantan y celebran.",en:"Then, everyone sings and celebrates."},{es:"Finalmente, rompen la piñata.",en:"Finally, they break the piñata."}],[{es:"¡Próspero Año Nuevo! ¡Feliz 2026!",en:"Happy New Year! Happy 2026!"},{es:"A la medianoche, vemos los fuegos artificiales.",en:"At midnight, we watch the fireworks."},{es:"El seis de enero es el Día de Reyes.",en:"January 6th is Three Kings Day."}],[{es:"Este año, aprendí mucho español.",en:"This year, I learned a lot of Spanish."},{es:"El año que viene, voy a seguir aprendiendo.",en:"Next year, I'm going to keep learning."},{es:"¡Estoy listo para el próximo nivel!",en:"I am ready for the next level!"}]][i],tip:["🎄 'Vamos a' is the group version of 'voy a' — use it for holiday plans you'll do TOGETHER!","🕯️ Las Posadas is one of the most beautiful traditions in the Spanish-speaking world.","🎆 New Year greetings in Spanish are useful in REAL LIFE — practice saying them with feeling!","🏆 Look at how far he's come. Every structure he's learned is in his toolkit now — forever!"][i]},activities:[[{emoji:"🎄",title:"Christmas Plans",desc:"Write 8 Christmas plans using 'voy a' and 'vamos a.' Include decorating, eating, giving gifts, and singing."},{emoji:"🎵",title:"Villancico Practice",desc:"Learn to sing 'Feliz Navidad' (the chorus) in Spanish. Clap along and enjoy it!"},{emoji:"🎁",title:"Wish List in Spanish",desc:"Write a Christmas wish list in Spanish: 'Para Navidad, quiero...' — 5 items with descriptions."}],[{emoji:"📖",title:"Las Posadas Story",desc:"Tell the Las Posadas story using sequence words. He narrates, you add details: primero... luego... después... finalmente..."},{emoji:"🕯️",title:"Posada Roleplay",desc:"Act out the Las Posadas knock-and-response. One person asks for shelter, other refuses, then welcomes. Use the vocabulary."},{emoji:"🎨",title:"Las Posadas Illustration",desc:"Draw a Las Posadas scene and label 8 items or people in Spanish."}],[{emoji:"🎆",title:"New Year Plans",desc:"Write 5 New Year's resolutions using 'el año que viene, voy a...' Make them real goals!"},{emoji:"👑",title:"Three Kings Day",desc:"Design a Rosca de Reyes. Who hides the baby figurine? What happens next? Write the story in Spanish."},{emoji:"🍾",title:"New Year Toast",desc:"Write a bilingual New Year's toast to read at midnight: 'Brindamos por... En el año nuevo, queremos...'"}],[{emoji:"🏆",title:"Year 1 Showcase",desc:"He presents in Spanish for 2 minutes: introduce himself, describe his family, talk about his favorite month of learning, and share a goal for Year 2."},{emoji:"📚",title:"Spanish Yearbook",desc:"Create a 'Year in Spanish' mini-book — one sentence per month about the most important thing learned."},{emoji:"🎉",title:"¡Fiesta de Español!",desc:"Celebrate! Make arroz con leche or pan dulce. Play a favorite review game. Award his Year 1 certificate!"}]][i],challenge:{title:"🏆 Dec Week "+(i+1)+" Challenge",desc:["Write a full Christmas letter in Spanish: greetings, holiday plans (vamos a), wish list, and Christmas wishes for the recipient.","Narrate the full Las Posadas story from beginning to end — all in Spanish, from memory, with expression!","Write a bilingual New Year speech (6 sentences in Spanish, then translate to English) that you could read at your family celebration.","Year 1 Final Challenge: 10-minute oral celebration — introduce yourself, talk about your favorite lessons, share your biggest accomplishment, and declare your Year 2 goals!"][i],prompt:['"¡Feliz Navidad! Este año, vamos a decorar el árbol y cantar villancicos. Para Navidad, quiero..."','"Primero, los peregrinos llegan a Belén. Ellos piden posada pero nadie los deja entrar. Luego..."','"Querida familia: En este año nuevo, brindamos por nuestra salud y felicidad. El año que viene, vamos a..."','"Me llamo ___. Aprendí español este año con mi madrina. Mi lección favorita fue... Lo más difícil fue... ¡Y ahora, estoy listo para el Año 2!"'][i]},notes:[[" Vamos a (we are going) is a beautiful and natural group structure","'Feliz Navidad' sung together = an unforgettable memory","The wish list is great for recycling clothing, food, and place vocabulary from the year"],["Las Posadas is one of the most culturally rich traditions to teach","The roleplay is genuinely fun — lean into the theatrics!","If he knows the Coco movie, connect the themes — it's a perfect bridge"],["New Year resolutions in Spanish are incredibly motivating","Three Kings Day often surprises American kids — it's a great cultural revelation","The New Year toast can be saved and used at actual New Year's!"],["THIS IS THE MOMENT. Year 1 is complete.","The showcase is the culmination of a full year of beautiful work","Print the certificate. Frame it. Make it feel BIG — because it is."]].flat().slice(0,3)},wed:{review:[["la Navidad","el regalo","vamos a","decorar","el villancico"],["las posadas","peregrinos","nueve noches","juntos","la piñata"],["los Reyes Magos","el año nuevo","¡Próspero Año Nuevo!","la medianoche","con amor"],["aprendí","mejoré","¡Lo logré!","¡Felicidades!","el próximo nivel"]][i],vocab:[[{es:"la Nochebuena",pr:"lah noh-cheh-BWEH-nah",en:"Christmas Eve"},{es:"la Nochevieja",pr:"lah noh-cheh-BYEH-hah",en:"New Year's Eve"},{es:"el nacimiento",pr:"el nah-see-MYEN-toh",en:"nativity scene"},{es:"reunirse",pr:"reh-oo-NEER-seh",en:"to get together"},{es:"¡Que lo pasen bien!",pr:"",en:"Have a great time!"}],[{es:"el espíritu navideño",pr:"el ehs-PEE-ree-too",en:"Christmas spirit"},{es:"la generosidad",pr:"lah heh-neh-roh-see-DAHD",en:"generosity"},{es:"dar",pr:"dahr",en:"to give"},{es:"recibir",pr:"reh-see-BEER",en:"to receive"},{es:"¡Es la temporada!",pr:"",en:"It's the season!"}],[{es:"el brindis final",pr:"",en:"the final toast"},{es:"el año que comienza",pr:"",en:"the year that begins"},{es:"comenzar",pr:"koh-mehn-SAHR",en:"to begin / start"},{es:"los deseos",pr:"lohs deh-SEH-ohs",en:"wishes"},{es:"¡Que se cumplan tus sueños!",pr:"",en:"May your dreams come true!"}],[{es:"el vocabulario",pr:"",en:"vocabulary"},{es:"la gramática",pr:"",en:"grammar"},{es:"la conversación",pr:"",en:"conversation"},{es:"la cultura",pr:"",en:"culture"},{es:"¡Hablas español!",pr:"AH-blahs ehs-pahn-YOHL",en:"You speak Spanish!"}]][i],grammar:{title:["Christmas Eve & Holiday Vocabulary","The Spirit of Giving","New Year Wishes","Year 1 Complete — You Speak Spanish!"][i],rule:["Christmas Eve vocabulary and holiday reunion phrases.","Use 'dar' and 'recibir' to talk about giving and receiving during the holidays.","Express wishes and toasts for the New Year.","Celebrate: he now knows 300+ words and can hold a real Spanish conversation."][i],examples:[[{es:"La Nochebuena es el 24 de diciembre.",en:"Christmas Eve is December 24th."},{es:"La familia se reúne para cenar juntos.",en:"The family gets together for dinner."},{es:"¡Que lo pasen muy bien esta Nochebuena!",en:"Have a wonderful Christmas Eve!"}],[{es:"Me gusta dar regalos más que recibirlos.",en:"I like giving gifts more than receiving them."},{es:"La generosidad es el espíritu navideño.",en:"Generosity is the Christmas spirit."},{es:"¡Es la temporada de dar y compartir!",en:"It's the season of giving and sharing!"}],[{es:"¡Que se cumplan todos tus sueños este año!",en:"May all your dreams come true this year!"},{es:"Brindamos por el año que comienza.",en:"We toast to the year that begins."},{es:"Los deseos de mi corazón son paz y amor.",en:"The wishes of my heart are peace and love."}],[{es:"¡Felicidades! ¡Hablas español!",en:"Congratulations! You speak Spanish!"},{es:"Este año fue increíble. ¡Lo lograste!",en:"This year was incredible. You did it!"},{es:"¡Hasta el año que viene, amigo!",en:"Until next year, friend!"}]][i],tip:["🎄 Holiday vocabulary is culturally rich AND personally relevant — enjoy every moment of it!","🎁 'Dar' vs 'recibir' gives a great chance to discuss values alongside vocabulary!","✨ New Year wishes are poetic in Spanish — read them with feeling and warmth!","🌟 He SPEAKS SPANISH now. That is real. That is forever. Celebrate it with everything you have!"][i]},activities:[[{emoji:"🎄",title:"Holiday Memory Game",desc:"Name everything on a Christmas/holiday scene in Spanish. 30 seconds, how many can you name?"},{emoji:"📝",title:"Holiday Letter Final Draft",desc:"Polish and finalize the Christmas letter from Monday. Add the Nochebuena/Nochevieja vocabulary."}],[{emoji:"🎁",title:"Gift Giving Reflection",desc:"Discuss: 'Es mejor dar que recibir?' (Is it better to give than receive?) Full Spanish conversation — opinions, reasons, examples."},{emoji:"✏️",title:"Generosity Story",desc:"Write a story about a child who shows generosity during the holiday season. Use all of this week's vocabulary."}],[{emoji:"🥂",title:"New Year Toast Practice",desc:"Practice the New Year toast from Monday. Read it with expression. Bonus: translate it together."},{emoji:"🌟",title:"Wishes Exchange",desc:"Exchange written wishes in Spanish: '¡Que se cumplan tus sueños de español en el Año 2!'"}],[{emoji:"🏆",title:"Year 1 Certificate Ceremony",desc:"Official ceremony: read the certificate aloud together, he accepts it, you both say what you're proud of in Spanish."},{emoji:"🎊",title:"Final Celebration Game",desc:"His choice of any review game from the year. Play together one last time for Year 1."}]][i],challenge:{title:"🏆 Final Dec Wed Week "+(i+1)+" Challenge",desc:["Write a bilingual holiday card — one side in Spanish, one in English. Include Nochebuena, Navidad, and Nochevieja vocabulary.","Write a holiday story featuring the spirit of generosity — 8 sentences, all vocabulary from December Weeks 1–2.","Deliver your New Year toast aloud with full expression and confidence. Then translate it for Godmommy.","YEAR 1 FINAL: Complete oral showcase + yearbook presentation. This is the graduation. You earned it!"][i],prompt:['"¡Feliz Navidad y Próspero Año Nuevo! La Nochebuena es especial porque toda la familia se reúne..."','"Había una vez un niño que quería dar regalos a todos en su vecindario. Él decidió..."','"Familia y amigos: Brindamos esta noche por un año increíble. En el año que viene, que se cumplan..."','"Soy ___. Este año, aprendí español con mi madrina. Aprendí sobre lugares, el cuerpo, la familia, las emociones, y mucho más. Estoy orgulloso/a porque puedo hablar español. En el Año 2, voy a..."'][i]},notes:[[" The holiday vocabulary is joyful — let the energy be high","Nochebuena/Nochevieja vocabulary is culturally specific and beautiful","Holiday letters make perfect mailed keepsakes for family"],["The giving vs receiving discussion in Spanish is genuinely philosophical — enjoy it!","The generosity story connects values from November to December beautifully","Let him take the lead on the story — he has more Spanish than he realizes"],["The New Year toast is special — practice it enough to say it with real confidence","If you can, have him actually use it at a family New Year's gathering","This is the last vocabulary introduction of Year 1 — make it count"],["THIS IS THE YEAR 1 GRADUATION.","Print the certificate. Have a little ceremony. Take a photo.","Year 2 preview: past tense, more complex conversations, reading Spanish books!"]].flat().slice(0,3)},ind:{video:[{id:"mMFBzBQX7xg",title:"Christmas in Spanish for Kids",channel:"Calico Spanish"},{id:"XuBdfJ0ICUM",title:"Las Posadas Explained",channel:"Butterfly Spanish"},{id:"zNSuLFJOKJo",title:"New Year in Spanish",channel:"Rockalingua"},{id:"_BFZK7UPXig",title:"Year 1 Spanish Review",channel:"Calico Spanish"}][i],workbook:{title:["Week 1 — ¡Feliz Navidad!","Week 2 — Las Posadas","Week 3 — Año Nuevo","Week 4 — ¡Lo Logré! Year 1 Complete"][i],instruction:["Fill in the blanks about Christmas in Spanish.","Fill in the blanks about Las Posadas.","Fill in the blanks about New Year's in Spanish.","Celebrate your Year 1 achievement by filling in the blanks about what you've learned!"][i],items:[{label:"1. 'Merry Christmas!' in Spanish: ¡___ Navidad!",answer:"Feliz",blank:true},{label:"2. 'We are going to open gifts': Vamos ___ abrir regalos.",answer:"a",blank:true},{label:"3. Las Posadas lasts ___ nights: ___ noches.",answer:"nueve",blank:true},{label:"4. 'Happy New Year!': ¡___ Año Nuevo!",answer:"Próspero",blank:true},{label:"5. 'I did it! I achieved it!': ¡Lo ___!",answer:"logré",blank:true}],bank:["Feliz","a","nueve","Próspero","logré","Navidad","regalo"]}}}))],
+};
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let curMonth='may', curWeek=0, curDay='mon', curMode='tutor';
+let gmVocab=[], gmType='', gmIdx=0, gmScore=0, gmAnswered=false;
+let gmDeck=[], gmFlipped=false;
+let matchSel=[], matchSolved=[], matchMoves=0, matchPairs=[];
+
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+function setMode(m){
+  curMode=m;
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+m).classList.add('active');
+  render();
+}
+function setMonth(m){
+  curMonth=m; curWeek=0; curDay='mon';
+  document.querySelectorAll('.m-tab').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  updateWeekNav(); updateDayTabs(); render();
+}
+function setWeek(w){
+  curWeek=w-1; curDay='mon';
+  document.querySelectorAll('.w-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  updateDayTabs(); render();
+}
+function setDay(d){
+  curDay=d;
+  document.querySelectorAll('.d-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+d).classList.add('active');
+  render();
+}
+function updateWeekNav(){
+  document.querySelectorAll('.w-btn').forEach((b,i)=>b.classList.toggle('active',i===curWeek));
+}
+function updateDayTabs(){
+  document.getElementById('tab-mon').textContent = curMode==='tutor'?'📘 Monday':'📘 Session A';
+  document.getElementById('tab-wed').textContent = curMode==='tutor'?'📗 Wednesday':'📗 Session B';
+  document.getElementById('tab-ind').textContent = '🌟 Solo Day';
+}
+
+// ═══════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════
+function render(){
+  const month = DATA[curMonth];
+  const week = month.weeks[curWeek];
+  const main = document.getElementById('main-content');
+  updateDayTabs();
+
+  // Month hero
+  const hero = `<div class="month-hero ${month.color}">
+    <div class="mh-bg">${month.emoji}</div>
+    <div class="mh-label">Week ${curWeek+1} of 4</div>
+    <div class="mh-title">${month.label}</div>
+    <div class="mh-sub">📍 ${month.theme}</div>
+    <div class="mh-tags">${month.tags.map(t=>`<span class="mh-tag">${t}</span>`).join('')}</div>
+  </div>`;
+
+  if(curDay==='mon' || curDay==='wed'){
+    const dayData = week[curDay];
+    if(!dayData){ main.innerHTML=hero+`<p style="text-align:center;color:var(--muted);padding:2rem;">Content coming soon!</p>`; return; }
+    main.innerHTML = hero + renderTutorDay(dayData, curDay);
+  } else {
+    const dayData = week.ind;
+    if(!dayData){ main.innerHTML=hero+`<p style="text-align:center;color:var(--muted);padding:2rem;">Content coming soon!</p>`; return; }
+    main.innerHTML = hero + renderIndDay(dayData);
+  }
+}
+
+function renderTutorDay(d, dayType){
+  const isWed = dayType==='wed';
+  const dayColor = isWed ? 'var(--purple)' : 'var(--teal)';
+
+  // Review banner for Wed
+  let reviewBanner = '';
+  if(isWed && d.review){
+    reviewBanner = `<div class="session-block block-warmup">
+      <div class="sb-header" onclick="toggleBlock(this)">
+        <span class="sb-time" style="background:#3b82f6">0–5 min</span>
+        <span class="sb-title">🔄 Warm-Up — Quick Review</span>
+        <span class="sb-arrow">▼</span>
+      </div>
+      <div class="sb-body open">
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:0.6rem;">Review these 5 words from Monday before introducing new content:</p>
+        <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
+          ${d.review.map(w=>`<span style="background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);border-radius:20px;padding:0.25rem 0.7rem;font-size:0.82rem;font-weight:700;color:#93c5fd;">${w}</span>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // Vocab block
+  const vocab = d.vocab || [];
+  const vocabCards = vocab.map(v=>`<div class="vocab-card">
+    <div class="vc-es">${v.es}</div>
+    ${v.pr ? `<div class="vc-pron">${v.pr}</div>` : ''}
+    <div class="vc-en">${v.en}</div>
+  </div>`).join('');
+
+  // Grammar
+  const g = d.grammar || {};
+  const exs = (g.examples||[]).map(e=>`<div class="ex-sentence"><div class="ex-es">${e.es}</div><div class="ex-en">${e.en}</div></div>`).join('');
+
+  // Activities
+  const acts = (d.activities||[]).map(a=>`<div class="act-card">
+    <div class="act-header"><span class="act-emoji">${a.emoji}</span><span class="act-title">${a.title}</span></div>
+    <div class="act-desc">${a.desc}</div>
+  </div>`).join('');
+
+  // Challenge
+  const ch = d.challenge || {};
+
+  // Notes
+  const notes = (d.notes||[]).map(n=>`<li>${n}</li>`).join('');
+
+  return reviewBanner + `
+  <div class="session-block block-content">
+    <div class="sb-header" onclick="toggleBlock(this)">
+      <span class="sb-time">5–15 min</span>
+      <span class="sb-title">📖 New Content — ${isWed ? d.grammar?.title || 'Review' : 'Vocabulary'}</span>
+      <span class="sb-arrow open">▼</span>
+    </div>
+    <div class="sb-body open">
+      ${!isWed ? `<p style="font-size:0.75rem;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.6rem;">This Week's ${vocab.length} Words</p>
+      <div class="vocab-grid">${vocabCards}</div>` : ''}
+      ${g.title ? `<div class="grammar-pill" style="margin-top:${!isWed?'1rem':'0'}">
+        <h4>${g.title}</h4>
+        <p style="font-size:0.82rem;color:rgba(255,255,255,0.75);margin-bottom:0.5rem;">${g.rule||''}</p>
+        ${exs}
+        ${g.tip ? `<div class="grammar-tip">${g.tip}</div>` : ''}
+      </div>` : ''}
+    </div>
+  </div>
+
+  <div class="session-block block-practice">
+    <div class="sb-header" onclick="toggleBlock(this)">
+      <span class="sb-time" style="background:var(--purple)">15–25 min</span>
+      <span class="sb-title">🎮 Interactive Practice</span>
+      <span class="sb-arrow">▼</span>
+    </div>
+    <div class="sb-body">
+      <div class="activity-list">${acts}</div>
+      <div style="margin-top:1rem;">
+        <p style="font-size:0.75rem;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.5rem;">🎮 Quick Games — This Week's Words</p>
+        <div class="game-launcher">
+          <button class="gl-btn fc" onclick="openGame('flashcard','${curMonth}',${curWeek},'${curDay}')"><span class="gl-emoji">🃏</span>Flashcards</button>
+          <button class="gl-btn qz" onclick="openGame('quiz','${curMonth}',${curWeek},'${curDay}')"><span class="gl-emoji">🧠</span>Quiz Me</button>
+          <button class="gl-btn mt" onclick="openGame('match','${curMonth}',${curWeek},'${curDay}')"><span class="gl-emoji">🔗</span>Match It</button>
+        </div>
+      </div>
+      ${notes ? `<div class="tutor-notes"><h5>📋 Tutor Notes</h5><ul>${notes}</ul></div>` : ''}
+    </div>
+  </div>
+
+  <div class="session-block block-wrapup">
+    <div class="sb-header" onclick="toggleBlock(this)">
+      <span class="sb-time" style="background:var(--yellow);color:var(--navy)">25–30 min</span>
+      <span class="sb-title">🏆 Wrap-Up & Challenge</span>
+      <span class="sb-arrow">▼</span>
+    </div>
+    <div class="sb-body">
+      <div class="challenge-box">
+        <h4>${ch.title||'Challenge Task'}</h4>
+        <p>${ch.desc||''}</p>
+        <div class="challenge-prompt">${ch.prompt||''}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderIndDay(d){
+  const wb = d.workbook || {};
+  const items = (wb.items||[]).map((item,i)=>`
+    <div class="wb-item">
+      <div class="wb-label">${item.label}</div>
+      <input class="wb-input" type="text" placeholder="Write your answer..." data-answer="${item.answer}" data-idx="${i}" id="wb-inp-${i}">
+    </div>`).join('');
+
+  const bank = (wb.bank||[]).map(w=>`<span class="wb-chip" onclick="useChip(this,'${w}')">${w}</span>`).join('');
+
+  return `
+  <div class="ind-section">
+    <div class="ind-section-title"><span>📺</span> Step 1 — Watch (10 min)</div>
+    <div class="timer-badge">⏱️ 10 minutes</div>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/${d.video?.id}?rel=0&modestbranding=1" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <p style="font-size:0.78rem;color:var(--muted);margin-top:0.5rem;">📺 <b>${d.video?.title||'Spanish Lesson'}</b> — ${d.video?.channel||''}</p>
+  </div>
+
+  <div class="ind-section">
+    <div class="ind-section-title"><span>📝</span> Step 2 — Workbook (10 min)</div>
+    <div class="timer-badge">⏱️ 10 minutes</div>
+    <div class="workbook-card">
+      <p style="font-family:'Baloo 2',sans-serif;font-size:1rem;font-weight:700;color:var(--yellow);margin-bottom:0.3rem;">${wb.title||'Practice'}</p>
+      <p class="wb-instruction">${wb.instruction||'Fill in the blanks.'}</p>
+      ${items}
+      <div style="margin-top:0.8rem;">
+        <p style="font-size:0.72rem;font-weight:800;color:var(--yellow);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.4rem;">📦 Word Bank</p>
+        <div class="wb-word-bank">${bank}</div>
+      </div>
+      <div class="wb-actions">
+        <button class="wb-btn check" onclick="checkWorkbook()">✅ Check Answers</button>
+        <button class="wb-btn clear" onclick="clearWorkbook()">🗑️ Clear</button>
+        <button class="wb-btn print" onclick="window.print()">🖨️ Print</button>
+      </div>
+      <div class="wb-result" id="wb-result"></div>
+    </div>
+  </div>
+
+  <div class="ind-section">
+    <div class="ind-section-title"><span>🎮</span> Step 3 — Games (10 min)</div>
+    <div class="timer-badge">⏱️ 10 minutes</div>
+    <div class="game-launcher">
+      <button class="gl-btn fc" onclick="openGame('flashcard','${curMonth}',${curWeek},'both')"><span class="gl-emoji">🃏</span>Flashcards</button>
+      <button class="gl-btn qz" onclick="openGame('quiz','${curMonth}',${curWeek},'both')"><span class="gl-emoji">🧠</span>Quiz Me</button>
+      <button class="gl-btn mt" onclick="openGame('match','${curMonth}',${curWeek},'both')"><span class="gl-emoji">🔗</span>Match It</button>
+    </div>
+    <p style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem;text-align:center;">Games use all vocab from this week's Monday + Wednesday sessions</p>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════
+// WORKBOOK
+// ═══════════════════════════════════════════════
+function useChip(chip, word){
+  if(chip.classList.contains('used')) return;
+  const inputs = document.querySelectorAll('.wb-input');
+  for(let inp of inputs){
+    if(!inp.value){
+      inp.value = word;
+      chip.classList.add('used');
+      break;
+    }
+  }
+}
+function checkWorkbook(){
+  const inputs = document.querySelectorAll('.wb-input');
+  let correct=0, total=inputs.length;
+  inputs.forEach(inp=>{
+    const ans = (inp.dataset.answer||'').toLowerCase().trim();
+    const val = inp.value.toLowerCase().trim();
+    const isOpen = ans.includes('open') || ans.includes('write') || ans.includes('any');
+    if(isOpen || val === ans || ans.includes(val)){
+      inp.style.borderColor='var(--green)'; correct++;
+    } else {
+      inp.style.borderColor='var(--coral)';
+    }
+  });
+  const r = document.getElementById('wb-result');
+  r.className='wb-result show '+(correct===total?'good':'bad');
+  r.textContent = correct===total ? `✅ ¡Perfecto! ${correct}/${total} correct! Excelente trabajo!` : `${correct}/${total} correct — review the ones in red and try again!`;
+}
+function clearWorkbook(){
+  document.querySelectorAll('.wb-input').forEach(i=>{i.value='';i.style.borderColor='';});
+  document.querySelectorAll('.wb-chip').forEach(c=>c.classList.remove('used'));
+  const r=document.getElementById('wb-result');
+  if(r){r.className='wb-result';r.textContent='';}
+}
+
+// ═══════════════════════════════════════════════
+// TOGGLE BLOCKS
+// ═══════════════════════════════════════════════
+function toggleBlock(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('.sb-arrow');
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════
+// GAMES
+// ═══════════════════════════════════════════════
+function getVocab(month, weekIdx, day){
+  const week = DATA[month].weeks[weekIdx];
+  if(!week) return [];
+  if(day==='both'){
+    return [...(week.mon?.vocab||[]), ...(week.wed?.vocab||[])];
+  }
+  return week[day]?.vocab || [];
+}
+
+function openGame(type, month, weekIdx, day){
+  const vocab = getVocab(month, weekIdx, day);
+  if(!vocab.length){ alert('No vocabulary found for this session!'); return; }
+  gmVocab = shuffle([...vocab]);
+  gmType = type;
+  document.getElementById('gmodal').style.display='block';
+  if(type==='flashcard') renderFC();
+  else if(type==='quiz') renderQuiz();
+  else if(type==='match') renderMatch();
+}
+function closeGame(){ document.getElementById('gmodal').style.display='none'; }
+
+function shuffle(a){ return [...a].sort(()=>Math.random()-0.5); }
+
+// Flashcard
+function renderFC(){
+  gmIdx=0; gmFlipped=false;
+  const gc=document.getElementById('gm-content');
+  gc.innerHTML=`
+    <div class="gm-h">🃏 Flashcards</div>
+    <div class="gm-sh">Tap card to flip • ${gmVocab.length} words</div>
+    <div class="fc-prog"><div class="fc-prog-fill" id="fc-pf" style="width:0%"></div></div>
+    <div class="fc-hint">👆 Tap to flip</div>
+    <div id="fc-wrap" onclick="fcFlip()">
+      <div id="fc-inner">
+        <div class="fc-side fc-front"><div class="fc-lbl">Spanish</div><div class="fc-word" id="fc-es"></div><div class="fc-sub" id="fc-pr"></div></div>
+        <div class="fc-side fc-back"><div class="fc-lbl">English</div><div class="fc-word" id="fc-en"></div></div>
+      </div>
+    </div>
+    <div class="fc-ctrl">
+      <button class="fc-nav" onclick="fcNav(-1)">← Prev</button>
+      <span class="fc-count" id="fc-cnt">1/${gmVocab.length}</span>
+      <button class="fc-nav" onclick="fcNav(1)">Next →</button>
+    </div>`;
+  fcUpdate();
+}
+function fcUpdate(){
+  const c=gmVocab[gmIdx];
+  document.getElementById('fc-es').textContent=c.es;
+  document.getElementById('fc-pr').textContent=c.pr||'';
+  document.getElementById('fc-en').textContent=c.en;
+  document.getElementById('fc-cnt').textContent=`${gmIdx+1}/${gmVocab.length}`;
+  document.getElementById('fc-pf').style.width=((gmIdx+1)/gmVocab.length*100)+'%';
+  const el=document.getElementById('fc-inner');
+  if(el){el.classList.remove('flip');gmFlipped=false;}
+}
+function fcFlip(){ document.getElementById('fc-inner').classList.toggle('flip'); gmFlipped=!gmFlipped; }
+function fcNav(d){ gmIdx=(gmIdx+d+gmVocab.length)%gmVocab.length; fcUpdate(); }
+
+// Quiz
+function renderQuiz(){
+  gmIdx=0; gmScore=0; gmAnswered=false;
+  showQ();
+}
+function showQ(){
+  if(gmIdx>=gmVocab.length){ showQDone(); return; }
+  gmAnswered=false;
+  const cur=gmVocab[gmIdx];
+  const wrongs=shuffle(gmVocab.filter((_,i)=>i!==gmIdx)).slice(0,3);
+  const opts=shuffle([cur,...wrongs]);
+  const askES=Math.random()>0.5;
+  const gc=document.getElementById('gm-content');
+  gc.innerHTML=`
+    <div class="gm-h">🧠 Quiz Me</div>
+    <div class="gm-sh">Question ${gmIdx+1} of ${gmVocab.length}</div>
+    <div class="quiz-q">${askES?cur.es:cur.en}</div>
+    <div class="quiz-opts">${opts.map(o=>`<button class="quiz-o" onclick="pickQ(this,'${o===cur?'correct':'wrong'}','${askES?o.en.replace(/'/g,"\\'"):o.es.replace(/'/g,"\\'")}','${(askES?cur.en:cur.es).replace(/'/g,"\\'")}')">${askES?o.en:o.es}</button>`).join('')}</div>
+    <div class="quiz-fb" id="quiz-fb"></div>
+    <button class="quiz-next" id="quiz-next" onclick="nextQ()">Next →</button>
+    <div class="quiz-bar"><span>⭐ Score: <b id="q-sc">${gmScore}</b></span><span>${gmIdx+1}/${gmVocab.length}</span></div>`;
+}
+function pickQ(btn,result,chosen,correct){
+  if(gmAnswered)return;
+  gmAnswered=true;
+  document.querySelectorAll('.quiz-o').forEach(b=>b.classList.add('done'));
+  if(result==='correct'){ btn.classList.add('correct'); gmScore++; document.getElementById('quiz-fb').innerHTML='✅ <span style="color:var(--green)">¡Correcto! ¡Muy bien!</span>'; }
+  else { btn.classList.add('wrong'); document.getElementById('quiz-fb').innerHTML=`❌ <span style="color:var(--coral)">The answer was: <b>${correct}</b></span>`; }
+  document.getElementById('q-sc').textContent=gmScore;
+  document.getElementById('quiz-next').style.display='block';
+}
+function nextQ(){ gmIdx++; showQ(); }
+function showQDone(){
+  const pct=Math.round(gmScore/gmVocab.length*100);
+  const e=pct===100?'🏆':pct>=70?'⭐':'💪';
+  const m=pct===100?'¡Perfecto! Perfect score!':pct>=70?'¡Muy bien! Great job!':'Keep practicing — you\'ve got this!';
+  document.getElementById('gm-content').innerHTML=`<div class="gm-done"><div class="trophy">${e}</div><h3>${m}</h3><p>Score: <b>${gmScore}/${gmVocab.length}</b> (${pct}%)</p><div class="gm-done-btns"><button class="gm-again" onclick="renderQuiz()">🔄 Try Again</button><button class="gm-other" onclick="closeGame()">Done</button></div></div>`;
+}
+
+// Match
+function renderMatch(){
+  const pairs=shuffle(gmVocab).slice(0,6);
+  matchPairs=pairs; matchSel=[]; matchSolved=[]; matchMoves=0;
+  const tiles=shuffle([...pairs.map((p,i)=>({id:i,side:'es',text:p.es,pi:i})),...pairs.map((p,i)=>({id:i+pairs.length,side:'en',text:p.en,pi:i}))]);
+  document.getElementById('gm-content').innerHTML=`
+    <div class="gm-h">🔗 Match It</div>
+    <div class="gm-sh">Match Spanish → English • 6 pairs</div>
+    <div class="match-info"><span>✅ <b id="mt-sol">0</b>/6 matched</span><span>🎯 Moves: <b id="mt-mv">0</b></span></div>
+    <div id="match-grid">${tiles.map(t=>`<div class="mt-tile" data-id="${t.id}" data-pi="${t.pi}" data-side="${t.side}" onclick="mtClick(this)">${t.text}</div>`).join('')}</div>
+    <p style="font-size:0.72rem;color:var(--muted);text-align:center;margin-top:0.5rem;">Match each Spanish word to its English meaning</p>`;
+}
+function mtClick(el){
+  if(el.classList.contains('mt-solved')||el.classList.contains('mt-sel'))return;
+  if(matchSel.length===2)return;
+  el.classList.add('mt-sel'); matchSel.push(el);
+  if(matchSel.length===2){
+    matchMoves++; document.getElementById('mt-mv').textContent=matchMoves;
+    const[a,b]=matchSel;
+    if(a.dataset.pi===b.dataset.pi&&a.dataset.side!==b.dataset.side){
+      setTimeout(()=>{
+        a.classList.remove('mt-sel');a.classList.add('mt-solved');
+        b.classList.remove('mt-sel');b.classList.add('mt-solved');
+        matchSolved.push(a.dataset.pi);
+        document.getElementById('mt-sol').textContent=matchSolved.length;
+        matchSel=[];
+        if(matchSolved.length===matchPairs.length){
+          setTimeout(()=>{
+            document.getElementById('gm-content').innerHTML=`<div class="gm-done"><div class="trophy">🏆</div><h3>¡Excelente! All matched!</h3><p>Completed in <b>${matchMoves} moves</b>. ${matchMoves<=8?'⭐ Amazing memory!':'👏 Great work!'}</p><div class="gm-done-btns"><button class="gm-again" onclick="renderMatch()">🔄 Play Again</button><button class="gm-other" onclick="closeGame()">Done</button></div></div>`;
+          },500);
+        }
+      },350);
+    } else {
+      setTimeout(()=>{
+        a.classList.remove('mt-sel');a.classList.add('mt-shake');
+        b.classList.remove('mt-sel');b.classList.add('mt-shake');
+        setTimeout(()=>{a.classList.remove('mt-shake');b.classList.remove('mt-shake');},400);
+        matchSel=[];
+      },500);
+    }
+  }
+}
+
+// Init
+render();
+</script>
+</body>
+</html>
